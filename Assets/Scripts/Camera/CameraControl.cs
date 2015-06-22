@@ -3,8 +3,6 @@ using System.Collections;
 
 public class CameraControl : MonoBehaviour
 {
-    public Transform target;
-
     public float moveSpeed = 20.0f;
 
     public float CameraDistance = 6.0f;
@@ -20,6 +18,8 @@ public class CameraControl : MonoBehaviour
     public float CameraPitchMax = 60.0f;
 
     public float CameraZoomSpeed = 10.0f;
+
+    private Transform target;
 
     void Start()
     {
