@@ -29,29 +29,34 @@ public class ScrollMenu : MonoBehaviour
 
     void Update()
     {
+        //Store the previous item to be returned to normal size
         int initialItem = currentItem;
 
+        //Increment or decrement the current selected item by the scrollwheel
         if (Input.GetAxisRaw("Mouse ScrollWheel") < 0)
         {
             if (currentItem < menuItems.Length - 1)
                 currentItem++;
         }
-
         if (Input.GetAxisRaw("Mouse ScrollWheel") > 0)
         {
             if (currentItem > 0)
                 currentItem--;
         }
 
+        //If the selected item has changed
         if (currentItem != initialItem)
         {
+            //Set the previously selected item to 75% it's normal size
             menuItems[initialItem].localScale = Vector3.one * 0.75f;
         }
         else
         {
+            //Set the currently selected item to it's normal size
             menuItems[initialItem].localScale = Vector3.one;
         }
 
+        //Move the menu to the selected item's position
         Vector3 pos = transform.position;
         pos.x = Mathf.Lerp(pos.x, pos.x = (-offset * currentItem) + (Screen.width / 2), speed);
         transform.position = pos;

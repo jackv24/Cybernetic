@@ -3,30 +3,44 @@ using System.Collections;
 
 public class CameraControl : MonoBehaviour
 {
+    //The rate at which the camera will track along the ground
     public float moveSpeed = 20.0f;
 
+    //The current distance from the target
     public float CameraDistance = 6.0f;
+    //Minimum distance from the target
     public float CameraDistanceMin = 1.0f;
+    //Maximum distance from the target
     public float CameraDistanceMax = 10.0f;
 
+    //Current Height of the camera relative to the target
     public float CameraHeight = 1.5f;
+    //Camera orbit sensitivity
     public float CameraSensitivity = 150.0f;
+    //Current rotation around the y axis
     public float CameraRotationY = 15.0f;
 
+    //Current camera pitch (local x rotation)
     public float CameraPitch = 0.0f;
+    //Minimum camera pitch
     public float CameraPitchMin = -5.0f;
+    //Maximum camera putch
     public float CameraPitchMax = 60.0f;
 
+    //The rate at which the camera zooms in and out
     public float CameraZoomSpeed = 10.0f;
 
+    //The camera target
     private Transform target;
 
     void Start()
     {
+        //If there is no target, create one.
         if (!target)
             target = new GameObject("Target").transform;
     }
 
+    //LateUpdate is used to make sure the camera moves during the same frame as the target, instead of the frame after
     void LateUpdate()
     {
         if (Input.GetButton("Move Camera") && !Input.GetButton("Orbit"))
