@@ -43,7 +43,7 @@ public class CameraControl : MonoBehaviour
     //LateUpdate is used to make sure the camera moves during the same frame as the target, instead of the frame after
     void LateUpdate()
     {
-        if (Input.GetButton("Move Camera") && !Input.GetButton("Orbit"))
+        if (Input.GetButton("Move Camera"))
         {
             target.eulerAngles = new Vector3(target.eulerAngles.x, transform.eulerAngles.y, target.eulerAngles.z);
 
@@ -54,7 +54,7 @@ public class CameraControl : MonoBehaviour
         if (target == null)
             return;
 
-        if (Input.GetButton("Orbit") )
+        if (Input.GetButton("Right Click"))
         {
             //Move camera up/down
             CameraPitch -= Input.GetAxis("Mouse Y") * CameraSensitivity * Time.deltaTime;

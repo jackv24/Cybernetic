@@ -44,7 +44,7 @@ public class PlaceTowers : MonoBehaviour
                 node.isAvailable = false;
             }
 
-            if (!node.isAvailable && Input.GetButton("RightClick"))
+            if (!node.isAvailable && Input.GetButton("Click") && Input.GetButton("Modifier"))
             {
                 node.Clear();
             }
