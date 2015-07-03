@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 7ba33d694db8b084aa9d3a81e1b657fc
-timeCreated: 1435473731
+guid: 2e148d3d86e51cf4eb3974efdd296e2a
+timeCreated: 1435744823
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -12,13 +12,13 @@ ModelImporter:
     100008: Base
     100010: Front
     100012: Head
-    100014: Leg_Back
-    100016: Leg_Front
-    100018: Leg_Left
-    100020: Leg_Right
-    100022: Mid
-    100024: Rotation-Base
-    100026: //RootNode
+    100014: //RootNode
+    100016: Leg_Back
+    100018: Leg_Front
+    100020: Leg_Left
+    100022: Leg_Right
+    100024: Mid
+    100026: Rotation-Base
     400000: Arm-1
     400002: Arm-2
     400004: Arm-3
@@ -26,13 +26,13 @@ ModelImporter:
     400008: Base
     400010: Front
     400012: Head
-    400014: Leg_Back
-    400016: Leg_Front
-    400018: Leg_Left
-    400020: Leg_Right
-    400022: Mid
-    400024: Rotation-Base
-    400026: //RootNode
+    400014: //RootNode
+    400016: Leg_Back
+    400018: Leg_Front
+    400020: Leg_Left
+    400022: Leg_Right
+    400024: Mid
+    400026: Rotation-Base
     2300000: Arm-1
     2300002: Arm-2
     2300004: Arm-3
@@ -117,7 +117,7 @@ ModelImporter:
     splitTangentsAcrossUV: 1
     normalImportMode: 0
     tangentImportMode: 1
-  importAnimation: 0
+  importAnimation: 1
   copyAvatar: 0
   humanDescription:
     human: []
