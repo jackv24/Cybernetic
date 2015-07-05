@@ -4,7 +4,7 @@ using System.Collections;
 public class Node : MonoBehaviour
 {
     //Is the node available to place a tower on?
-    public bool isAvailable = true;
+    public bool isAvailable = false;
     //Stores previous availability
     private bool currentIsAvailable;
 
@@ -16,8 +16,14 @@ public class Node : MonoBehaviour
     //The mesh renderer which the materials color will be changed on
     private MeshRenderer rend;
 
+    //Determine whther this node is a build node
+    public bool canPlace = false;
+
     void Start()
     {
+        //If this is a placement node, make it available
+        isAvailable = canPlace;
+
         //Set the last available state to the current state
         currentIsAvailable = isAvailable;
 
@@ -59,11 +65,14 @@ public class Node : MonoBehaviour
 
     public void Clear()
     {
-        foreach (Transform tower in transform)
+        if (canPlace)
         {
-            GameObject.Destroy(tower.gameObject);
-        }
+            foreach (Transform tower in transform)
+            {
+                GameObject.Destroy(tower.gameObject);
+            }
 
-        isAvailable = true;
+            isAvailable = true;
+        }
     }
 }

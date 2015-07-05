@@ -17,8 +17,6 @@ public class CameraControl : MonoBehaviour
     public float CameraHeight = 1.5f;
     //Camera orbit sensitivity
     public float CameraSensitivity = 150.0f;
-    //Current rotation around the y axis
-    public float CameraRotationY = 15.0f;
 
     //Current camera pitch (local x rotation)
     public float CameraPitch = 0.0f;

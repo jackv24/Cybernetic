@@ -49,6 +49,11 @@ public class PlaceTowers : MonoBehaviour
                 node.Clear();
             }
         }
+        else if (lastNode)
+        {
+            lastNode.SelectNode(false);
+            lastNode = null;
+        }
     }
 
     //Sets node states

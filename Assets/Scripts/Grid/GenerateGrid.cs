@@ -13,6 +13,10 @@ public class GenerateGrid : MonoBehaviour
     //The layer on which the grid will be generated
     public LayerMask layer;
 
+    //Determine whether the selected node can be built on
+    public string buildTag = "Build";
+    public string pathTag = "Path";
+
     //Toggle to generate the grid within the editor
     public bool generateGrid = false;
 
@@ -67,7 +71,7 @@ public class GenerateGrid : MonoBehaviour
                 //Stores info from the raycast
                 RaycastHit hitInfo;
 
-                //If a raycast p[rojected downward from a point at the center of every grid square intersects the ground layer
+                //If a raycast projected downward from a point at the center of every grid square intersects the ground layer
                 if (Physics.Raycast(new Vector3(x + 0.5f, 100, y + 0.5f) + transform.position, Vector3.down, out hitInfo, 200f, layer))
                 {
                     //Instantiate a node at that point
@@ -76,6 +80,14 @@ public class GenerateGrid : MonoBehaviour
                     node.transform.parent = transform;
                     //Change it's name to reflect its grid position
                     node.name = nodePrefab.name + x + "x" + y + "y";
+
+                    if (hitInfo.collider.tag != pathTag)
+                    {
+                        Node n = node.GetComponent<Node>();
+
+                        n.canPlace = true;
+                        n.isAvailable = true;
+                    }
                 }
             }
         }
