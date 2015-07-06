@@ -9,7 +9,7 @@ public class PlaceTowers : MonoBehaviour
     //The maximum distance from the camera a tower can be placed
     public float maxDistance = 100.0f;
     //The layer on which the nodes are located
-    public LayerMask Layer;
+    public LayerMask layer;
 
     //The camera to project rays from
     private Camera cam;
@@ -30,7 +30,7 @@ public class PlaceTowers : MonoBehaviour
         RaycastHit hitInfo;
 
         //Cast a ray out from the cursor
-        if (Physics.Raycast(ray, out hitInfo, maxDistance, Layer))
+        if (Physics.Raycast(ray, out hitInfo, maxDistance, layer))
         {
             //Store the node hit
             Node node = hitInfo.collider.GetComponent<Node>();
@@ -42,11 +42,6 @@ public class PlaceTowers : MonoBehaviour
             {
                 Place(towerPrefab, node);
                 node.isAvailable = false;
-            }
-
-            if (!node.isAvailable && Input.GetButton("Click") && Input.GetButton("Modifier"))
-            {
-                node.Clear();
             }
         }
         else if (lastNode)
@@ -79,5 +74,6 @@ public class PlaceTowers : MonoBehaviour
         GameObject tower = Instantiate(towerPrefab, node.transform.position + towerPrefab.transform.position, towerPrefab.transform.rotation) as GameObject;
 
         tower.transform.parent = node.transform;
+        node.occupyingTower = tower;
     }
 }

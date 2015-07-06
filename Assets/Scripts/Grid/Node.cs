@@ -8,6 +8,8 @@ public class Node : MonoBehaviour
     //Stores previous availability
     private bool currentIsAvailable;
 
+    public GameObject occupyingTower;
+
     //Color to display when available
     public Color availableColor = Color.green;
     //Color to display when taken
@@ -71,6 +73,8 @@ public class Node : MonoBehaviour
             {
                 GameObject.Destroy(tower.gameObject);
             }
+
+            occupyingTower = null;
 
             isAvailable = true;
         }

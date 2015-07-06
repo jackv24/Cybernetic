@@ -51,4 +51,14 @@ public class BaseHealth : MonoBehaviour
         //Set health text
         healthText.text = string.Format(initialHealthText, currentHealth, maxHealth);
     }
+
+    public void Damage(int value)
+    {
+        currentHealth -= value;
+    }
+
+    public void Heal(int value)
+    {
+        currentHealth += value;
+    }
 }
