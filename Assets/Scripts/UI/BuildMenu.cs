@@ -1,14 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
-public class DisplayBuildMenu : MonoBehaviour
+public class BuildMenu : MonoBehaviour
 {
     //Menu item prefab to instantiate
     public GameObject menuItemPrefab;
 
     //A list of all menu items
     public List<GameObject> menuItems = new List<GameObject>();
+
+    [HideInInspector]
+    public BuildMenuItem lastSelectedMenuItem;
 
     //top displacement
     public float topPos = -10f;
@@ -49,6 +53,27 @@ public class DisplayBuildMenu : MonoBehaviour
             //Set menu item data
             buildMenuItem.towerName = towerStats.towerName;
             buildMenuItem.cost = towerStats.cost;
+
+            //Set's the menu item's tower prefab
+            buildMenuItem.towerPrefab = towerDatabase.towers[i];
+
+            //Give menu item a reference to this script
+            buildMenuItem.buildMenu = this;
+        }
+    }
+
+    public void SelectItem(BuildMenuItem item)
+    {
+        if (menuItems.Contains(item.gameObject))
+        {
+            if (lastSelectedMenuItem)
+                lastSelectedMenuItem.GetComponent<Button>().interactable = true;
+
+            item.GetComponent<Button>().interactable = false;
+
+            lastSelectedMenuItem = item;
+
+            GameObject.Find("Grid").GetComponent<PlaceTowers>().SetCurrentTower(item.towerPrefab);
         }
     }
 }

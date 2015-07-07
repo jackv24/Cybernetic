@@ -47,13 +47,17 @@ public class PlaceTowers : MonoBehaviour
             //If the node is avalable, and the click button is pressed when the cursor is not over a UI element
             if (node.isAvailable && Input.GetButton("Click") && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
             {
-                //If there are enough resources available
-                if (resourceManager.resources >= towerPrefab.GetComponent<TowerStats>().cost)
+                //If there is a tower prefab selected
+                if (towerPrefab)
                 {
-                    //Place the tower
-                    Place(towerPrefab, node);
-                    //Set the nodes availability to false
-                    node.isAvailable = false;
+                    //If there are enough resources available
+                    if (resourceManager.resources >= towerPrefab.GetComponent<TowerStats>().cost)
+                    {
+                        //Place the tower
+                        Place(towerPrefab, node);
+                        //Set the nodes availability to false
+                        node.isAvailable = false;
+                    }
                 }
             }
         }
@@ -98,5 +102,11 @@ public class PlaceTowers : MonoBehaviour
 
         //Charge the cost of this tower
         resourceManager.RemoveResources(tower.GetComponent<TowerStats>().cost);
+    }
+
+    //Sets the tower prefab to instantiate
+    public void SetCurrentTower(GameObject tower)
+    {
+        towerPrefab = tower;
     }
 }
