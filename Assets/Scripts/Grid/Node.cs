@@ -65,17 +65,22 @@ public class Node : MonoBehaviour
         rend.enabled = state;
     }
 
+    //Clears the node (called externally)
     public void Clear()
     {
+        //If this is a placeable node
         if (canPlace)
         {
+            //Delete all children of the node (tower)
             foreach (Transform tower in transform)
             {
                 GameObject.Destroy(tower.gameObject);
             }
 
+            //Set the occupying tower to null
             occupyingTower = null;
 
+            //Make this tower available
             isAvailable = true;
         }
     }

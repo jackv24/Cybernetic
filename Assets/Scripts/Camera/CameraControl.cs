@@ -29,7 +29,7 @@ public class CameraControl : MonoBehaviour
     public float CameraZoomSpeed = 10.0f;
 
     //The camera target
-    private Transform target;
+    public Transform target;
 
     void Start()
     {

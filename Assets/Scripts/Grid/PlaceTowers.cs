@@ -17,6 +17,7 @@ public class PlaceTowers : MonoBehaviour
     //The last node wich was selected
     private Node lastNode;
 
+    //The resource manager
     private ResourceManager resourceManager;
 
     void Start()
@@ -24,6 +25,7 @@ public class PlaceTowers : MonoBehaviour
         //Set cam as the main camera
         cam = Camera.main;
 
+        //Gets a reference to the resource manager
         resourceManager = GameObject.FindWithTag("GameController").GetComponent<ResourceManager>();
     }
 
@@ -42,18 +44,25 @@ public class PlaceTowers : MonoBehaviour
             //Set node state
             HoverNode(node);
 
+            //If the node is avalable, and the click button is pressed when the cursor is not over a UI element
             if (node.isAvailable && Input.GetButton("Click") && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
             {
+                //If there are enough resources available
                 if (resourceManager.resources >= towerPrefab.GetComponent<TowerStats>().cost)
                 {
+                    //Place the tower
                     Place(towerPrefab, node);
+                    //Set the nodes availability to false
                     node.isAvailable = false;
                 }
             }
         }
+        //If the user clicks on something that is not a node
         else if (lastNode)
         {
+            //Deselect the last node
             lastNode.SelectNode(false);
+            //Clear the reference to the last node
             lastNode = null;
         }
     }
@@ -76,13 +85,18 @@ public class PlaceTowers : MonoBehaviour
         }
     }
 
+    //Places a tower
     void Place(GameObject towerPrefab, Node node)
     {
+        //Instantiates the tower at the node position
         GameObject tower = Instantiate(towerPrefab, node.transform.position + towerPrefab.transform.position, towerPrefab.transform.rotation) as GameObject;
 
+        //Makes the tower a child of the node
         tower.transform.parent = node.transform;
+        //Sets the nodes occupying tower to this tower
         node.occupyingTower = tower;
 
-        resourceManager.UseResources(tower.GetComponent<TowerStats>().cost);
+        //Charge the cost of this tower
+        resourceManager.RemoveResources(tower.GetComponent<TowerStats>().cost);
     }
 }
