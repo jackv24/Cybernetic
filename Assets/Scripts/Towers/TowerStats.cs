@@ -8,4 +8,7 @@ public class TowerStats : MonoBehaviour
 
     //How much the tower costs to build
     public int cost = 10;
+
+    //Attack range
+    public float range = 2f;
 }

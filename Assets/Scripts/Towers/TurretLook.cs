@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(TowerTargets))]
 public class TurretLook : MonoBehaviour
 {
     //The target which the turret will look at
-    public Transform target;
+    private Transform target;
 
     //The transform for the mechanical turret parts
     public Transform rotateTransform;
@@ -13,14 +14,17 @@ public class TurretLook : MonoBehaviour
     //The spped at which the turret will rotate
     public float rotateSpeed = 0.25f;
 
+    private TowerTargets towerTargets;
+
     void Start()
     {
-        //Sets target for testing purposes
-        target = GameObject.FindWithTag("Enemy").transform;
+        towerTargets = GetComponent<TowerTargets>();
     }
 
     void Update()
     {
+        target = towerTargets.target;
+
         //If there is a target, rotate towards it
         if (target)
             RotateTowards(target.position);

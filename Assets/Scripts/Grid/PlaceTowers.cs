@@ -35,20 +35,20 @@ public class PlaceTowers : MonoBehaviour
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hitInfo;
 
-        //Cast a ray out from the cursor
-        if (Physics.Raycast(ray, out hitInfo, maxDistance, layer))
+        //If there is a tower prefab to be placed
+        if (towerPrefab)
         {
-            //Store the node hit
-            Node node = hitInfo.collider.GetComponent<Node>();
-
-            //Set node state
-            HoverNode(node);
-
-            //If the node is avalable, and the click button is pressed when the cursor is not over a UI element
-            if (node.isAvailable && Input.GetButton("Click") && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            //Cast a ray out from the cursor
+            if (Physics.Raycast(ray, out hitInfo, maxDistance, layer))
             {
-                //If there is a tower prefab selected
-                if (towerPrefab)
+                //Store the node hit
+                Node node = hitInfo.collider.GetComponent<Node>();
+
+                //Set node state
+                HoverNode(node);
+
+                //If the node is avalable, and the click button is pressed when the cursor is not over a UI element
+                if (node.isAvailable && Input.GetButton("Click") && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
                 {
                     //If there are enough resources available
                     if (resourceManager.resources >= towerPrefab.GetComponent<TowerStats>().cost)
@@ -60,14 +60,14 @@ public class PlaceTowers : MonoBehaviour
                     }
                 }
             }
-        }
-        //If the user clicks on something that is not a node
-        else if (lastNode)
-        {
-            //Deselect the last node
-            lastNode.SelectNode(false);
-            //Clear the reference to the last node
-            lastNode = null;
+            //If the user clicks on something that is not a node
+            else if (lastNode)
+            {
+                //Deselect the last node
+                lastNode.SelectNode(false);
+                //Clear the reference to the last node
+                lastNode = null;
+            }
         }
     }
 

@@ -15,15 +15,19 @@ public class BuildMenuItem : MonoBehaviour
     //Cost of the tower
     public int cost = 0;
 
+    //The range of the tower
+    public float range = 0;
+
+    //The tower prefab
     public GameObject towerPrefab;
 
-    [HideInInspector]
+    [HideInInspector] //Build menu is set externally by the build menu script
     public BuildMenu buildMenu;
 
     void Start()
     {
         //Set the new text value by formatting the original with data
-        infoText.text = string.Format(infoText.text, towerName);
+        infoText.text = string.Format(infoText.text, towerName, range);
         //Set cost text
         costText.text = cost.ToString();
     }

@@ -20,8 +20,9 @@ public class BaseHealth : MonoBehaviour
 
     void Start()
     {
-        //set the initial health text string
-        initialHealthText = healthText.text;
+        if(healthText)
+            //set the initial health text string
+            initialHealthText = healthText.text;
 
         //Update health display
         UpdateHealth();
@@ -32,6 +33,9 @@ public class BaseHealth : MonoBehaviour
         //If the health vlue has changed, update health displays
         if (currentHealth != lastHealthValue)
             UpdateHealth();
+
+        if (currentHealth <= 0)
+            Die();
 
         //Keeps the current health vlue within constraints
         if (currentHealth > maxHealth)
@@ -46,19 +50,26 @@ public class BaseHealth : MonoBehaviour
         //Sets the last health vlue
         lastHealthValue = currentHealth;
 
-        //Sets health slider value
-        healthBar.value = (float)currentHealth / maxHealth;
-        //Set health text
-        healthText.text = string.Format(initialHealthText, currentHealth, maxHealth);
+        if(healthBar)
+            //Sets health slider value
+            healthBar.value = (float)currentHealth / maxHealth;
+        if(healthText)
+            //Set health text
+            healthText.text = string.Format(initialHealthText, currentHealth, maxHealth);
     }
 
-    public void Damage(int value)
+    public void RemoveHealth(int value)
     {
         currentHealth -= value;
     }
 
-    public void Heal(int value)
+    public void AddHealth(int value)
     {
         currentHealth += value;
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
     }
 }

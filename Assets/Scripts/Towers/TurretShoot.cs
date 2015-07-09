@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//Tower targets script is required
+[RequireComponent(typeof(TowerTargets))]
 public class TurretShoot : MonoBehaviour
 {
     //The projectile prefab which the turret will fire
@@ -14,21 +16,31 @@ public class TurretShoot : MonoBehaviour
     //Counter till next shot
     private float nextFireTime = 0;
 
+    //Reference to towertargets
+    private TowerTargets towerTargets;
+
     void Start()
     {
+        //Gets a reference to the tower target script attached to this tower
+        towerTargets = GetComponent<TowerTargets>();
+
         //Set the initial time till next shot
         nextFireTime = Time.time + fireTime;
     }
 
     void Update()
     {
-        //If the time passed is more than the next fire time...
-        if (Time.time > nextFireTime)
+        //If there is a target...
+        if (towerTargets.target)
         {
-            //Set next fire time
-            nextFireTime += fireTime;
-            //Fire a projectile
-            Fire();
+            //If the time passed is more than the next fire time...
+            if (Time.time > nextFireTime)
+            {
+                //Set next fire time
+                nextFireTime += fireTime;
+                //Fire a projectile
+                Fire();
+            }
         }
     }
 

@@ -53,6 +53,7 @@ public class BuildMenu : MonoBehaviour
             //Set menu item data
             buildMenuItem.towerName = towerStats.towerName;
             buildMenuItem.cost = towerStats.cost;
+            buildMenuItem.range = towerStats.range;
 
             //Set's the menu item's tower prefab
             buildMenuItem.towerPrefab = towerDatabase.towers[i];
