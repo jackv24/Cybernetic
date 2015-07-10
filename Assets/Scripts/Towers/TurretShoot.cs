@@ -30,17 +30,17 @@ public class TurretShoot : MonoBehaviour
 
     void Update()
     {
-        //If there is a target...
-        if (towerTargets.target)
+        
+        //If the time passed is more than the next fire time...
+        if (Time.time > nextFireTime)
         {
-            //If the time passed is more than the next fire time...
-            if (Time.time > nextFireTime)
-            {
-                //Set next fire time
-                nextFireTime += fireTime;
+            //If there is a target...
+            if (towerTargets.target)                
                 //Fire a projectile
                 Fire();
-            }
+
+            //Set next fire time
+            nextFireTime += fireTime;
         }
     }
 

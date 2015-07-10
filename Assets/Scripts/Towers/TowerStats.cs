@@ -11,4 +11,10 @@ public class TowerStats : MonoBehaviour
 
     //Attack range
     public float range = 2f;
+
+    public int currentHealth = 100;
+    public int maxHealth = 100;
+
+    public int currentLevel = 1;
+    public int maxLevel = 1;
 }

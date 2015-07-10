@@ -21,6 +21,11 @@ public class Node : MonoBehaviour
     //Determine whther this node is a build node
     public bool canPlace = false;
 
+    //Is this node selected with a tower on it?
+    private bool selectedTowerNode = false;
+
+    public Color selectedColor = Color.blue;
+
     void Start()
     {
         //If this is a placement node, make it available
@@ -61,8 +66,23 @@ public class Node : MonoBehaviour
     //Sets node selected state (mouse over)
     public void SelectNode(bool state)
     {
-        //Set mesh renderer on/off
-        rend.enabled = state;
+        if (!selectedTowerNode)
+        {
+            //Set mesh renderer on/off
+            rend.enabled = state;
+        }
+    }
+
+    public void SelectNode(bool state, bool selectedTower)
+    {
+        selectedTowerNode = selectedTower;
+
+        if (selectedTower)
+            rend.material.color = selectedColor;
+        else
+            SetColorState(state);
+
+        SelectNode(state);
     }
 
     //Clears the node (called externally)
@@ -82,6 +102,9 @@ public class Node : MonoBehaviour
 
             //Make this tower available
             isAvailable = true;
+
+            if (selectedTowerNode)
+                SelectNode(false, false);
         }
     }
 }
