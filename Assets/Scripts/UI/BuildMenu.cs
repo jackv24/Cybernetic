@@ -25,7 +25,7 @@ public class BuildMenu : MonoBehaviour
     void Start()
     {
         //Get the tower database from the game controller
-        towerDatabase = GameObject.FindWithTag("GameController").GetComponent<TowerDatabase>();
+        towerDatabase = GameManager.towerDatabase;
 
         //For every tower in the database
         for (int i = 0; i < towerDatabase.towers.Length; i++)
@@ -52,8 +52,9 @@ public class BuildMenu : MonoBehaviour
 
             //Set menu item data
             buildMenuItem.towerName = towerStats.towerName;
-            buildMenuItem.cost = towerStats.cost;
+            buildMenuItem.health = towerStats.maxHealth;
             buildMenuItem.range = towerStats.range;
+            buildMenuItem.cost = towerStats.cost;
 
             //Set's the menu item's tower prefab
             buildMenuItem.towerPrefab = towerDatabase.towers[i];

@@ -7,13 +7,10 @@ public class TowerTargets : MonoBehaviour
     public Transform target;
 
     //Script references
-    private EnemyManager enemyManager;
     private TowerStats towerStats;
 
     void Start()
     {
-        //FInd enemy manager attached to game controller
-        enemyManager = GameObject.FindWithTag("GameController").GetComponent<EnemyManager>();
         //Get tower stats attached to this tower
         towerStats = GetComponent<TowerStats>();
     }
@@ -27,7 +24,7 @@ public class TowerTargets : MonoBehaviour
             float dist = towerStats.range;
 
             //Iterate through all possible enemy targets
-            foreach (GameObject enemy in enemyManager.enemies)
+            foreach (GameObject enemy in GameManager.enemyManager.enemies)
             {
                 //If the enemy is closest
                 if (Vector3.Distance(transform.position, enemy.transform.position) < dist)

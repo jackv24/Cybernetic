@@ -58,16 +58,22 @@ public class SelectTowers : MonoBehaviour
                     //Enables the tooltip
                     tooltip.SetActive(true);
 
+                    //Set tooltip references
                     towerTooltip.selectedNode = selectedNode;
                     towerTooltip.selectTowers = this;
 
+                    //If a node was previously selected
                     if (lastSelectedNode)
+                        //Deselect it
                         lastSelectedNode.SelectNode(false, false);
 
+                    //Select the new node
                     selectedNode.SelectNode(true, true);
 
+                    //Set currently selected node as the last selected node
                     lastSelectedNode = selectedNode;
 
+                    //Set selected tower for tower tooltip
                     towerTooltip.towerStats = selectedTower.GetComponent<TowerStats>();
                 }
                 else //If there is no tower on this node
@@ -75,8 +81,10 @@ public class SelectTowers : MonoBehaviour
                     //Hide the tooltip
                     RemoveTooltip();
 
+                    //If a node was selected
                     if (lastSelectedNode)
                     {
+                        //Deselect and clear
                         lastSelectedNode.SelectNode(false, false);
                         lastSelectedNode = null;
                     }

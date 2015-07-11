@@ -17,16 +17,10 @@ public class PlaceTowers : MonoBehaviour
     //The last node wich was selected
     private Node lastNode;
 
-    //The resource manager
-    private ResourceManager resourceManager;
-
     void Start()
     {
         //Set cam as the main camera
         cam = Camera.main;
-
-        //Gets a reference to the resource manager
-        resourceManager = GameObject.FindWithTag("GameController").GetComponent<ResourceManager>();
     }
 
     void Update()
@@ -51,7 +45,7 @@ public class PlaceTowers : MonoBehaviour
                 if (node.isAvailable && Input.GetButton("Click") && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
                 {
                     //If there are enough resources available
-                    if (resourceManager.resources >= towerPrefab.GetComponent<TowerStats>().cost)
+                    if (GameManager.resourceManager.resources >= towerPrefab.GetComponent<TowerStats>().cost)
                     {
                         //Place the tower
                         Place(towerPrefab, node);
@@ -101,7 +95,7 @@ public class PlaceTowers : MonoBehaviour
         node.occupyingTower = tower;
 
         //Charge the cost of this tower
-        resourceManager.RemoveResources(tower.GetComponent<TowerStats>().cost);
+        GameManager.resourceManager.RemoveResources(tower.GetComponent<TowerStats>().cost);
     }
 
     //Sets the tower prefab to instantiate

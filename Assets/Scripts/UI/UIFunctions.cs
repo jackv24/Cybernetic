@@ -15,4 +15,14 @@ public class UIFunctions : MonoBehaviour
     {
         Application.LoadLevel(name);
     }
+
+    public void SetWorld(int number)
+    {
+        PlayerPrefs.SetInt("world", number);
+    }
+
+    public void SetLevel(int number)
+    {
+        PlayerPrefs.SetInt("level", number);
+    }
 }

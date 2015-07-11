@@ -73,6 +73,7 @@ public class Node : MonoBehaviour
         }
     }
 
+    //Overloaded method for selecting a node that already has a tower
     public void SelectNode(bool state, bool selectedTower)
     {
         selectedTowerNode = selectedTower;
@@ -94,7 +95,7 @@ public class Node : MonoBehaviour
             //Delete all children of the node (tower)
             foreach (Transform tower in transform)
             {
-                GameObject.Destroy(tower.gameObject);
+                Destroy(tower.gameObject);
             }
 
             //Set the occupying tower to null

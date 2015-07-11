@@ -16,7 +16,7 @@ public class EnemyMovement : MonoBehaviour
 
     void Start()
     {
-        waypointManager = GameObject.FindWithTag("GameController").GetComponent<WaypointManager>();
+        waypointManager = GameManager.waypointManager;
 
         //Set enemy height to intitial y value
         height = transform.position.y;

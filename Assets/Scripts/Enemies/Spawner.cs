@@ -12,22 +12,28 @@ public class Spawner : MonoBehaviour
     //The time at which the next enemy will spawn
     private float nextSpawnTime;
 
-    void Start()
-    {
-        //Set initial value for next spawn time
-        nextSpawnTime = Time.time + spawnTime;
-    }
+    private bool startSpawn = true;
 
     void Update()
     {
-        //If it is time to spawn another enemy
-        if (nextSpawnTime <= Time.time)
+        if (startSpawn && GameManager.levelLoaded)
         {
-            //Set new spawn time
-            nextSpawnTime += spawnTime;
+            startSpawn = false;
 
-            //Spawn enemy
-            Spawn(enemyPrefab);
+            nextSpawnTime = Time.time + spawnTime;
+        }
+
+        if (GameManager.levelLoaded)
+        {
+            //If it is time to spawn another enemy
+            if (nextSpawnTime <= Time.time)
+            {
+                //Set new spawn time
+                nextSpawnTime += spawnTime;
+
+                //Spawn enemy
+                Spawn(enemyPrefab);
+            }
         }
     }
 

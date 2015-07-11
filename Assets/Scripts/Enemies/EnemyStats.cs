@@ -8,15 +8,12 @@ public class EnemyStats : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth = 100;
 
-    //Enemy manager to register with
-    private EnemyManager enemyManager;
+    public int resources = 2;
 
     void Start()
     {
-        //Get reference to enemy manager
-        enemyManager = GameObject.FindWithTag("GameController").GetComponent<EnemyManager>();
         //Add self to enemies list
-        enemyManager.enemies.Add(gameObject);
+        GameManager.enemyManager.enemies.Add(gameObject);
     }
 
     void Update()
@@ -45,7 +42,7 @@ public class EnemyStats : MonoBehaviour
     void Die()
     {
         //Remove self from enemies list
-        enemyManager.enemies.Remove(gameObject);
+        GameManager.enemyManager.RegisterDeath(gameObject, resources);
 
         //Detsroy self
         Destroy(gameObject);

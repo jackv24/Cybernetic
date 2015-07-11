@@ -10,13 +10,13 @@ public class BuildMenuItem : MonoBehaviour
     //Text to display tower cost
     public Text costText;
 
-    //The name of the tower
+    //Tower variable
     public string towerName = "";
-    //Cost of the tower
-    public int cost = 0;
-
-    //The range of the tower
+    public int health = 0;
+    public int speed = 0;
+    public int power = 0;
     public float range = 0;
+    public int cost = 0;
 
     //The tower prefab
     public GameObject towerPrefab;
@@ -27,7 +27,13 @@ public class BuildMenuItem : MonoBehaviour
     void Start()
     {
         //Set the new text value by formatting the original with data
-        infoText.text = string.Format(infoText.text, towerName, range);
+        infoText.text = string.Format(infoText.text, 
+            towerName, 
+            health, 
+            speed, 
+            power, 
+            range);
+
         //Set cost text
         costText.text = cost.ToString();
     }

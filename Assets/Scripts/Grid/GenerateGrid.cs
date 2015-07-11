@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[ExecuteInEditMode]
 public class GenerateGrid : MonoBehaviour
 {
     //The node prefab to be instantiated
@@ -17,21 +16,13 @@ public class GenerateGrid : MonoBehaviour
     public string buildTag = "Build";
     public string pathTag = "Path";
 
-    //Toggle to generate the grid within the editor
-    public bool generateGrid = false;
-
-    void Start()
-    {
-        //Prevents the grid from regenerating on game start
-        generateGrid = false;
-    }
+    //Toggle to generate the grid on game start
+    private bool generateGrid = true;
 
     void Update()
     {
-        
-        if (generateGrid)
+        if (generateGrid && GameManager.levelLoaded)
         {
-            //Set the generateGrid bool to false. A method of turning a checkbox into a form of button in the inspector
             generateGrid = false;
 
             //If there is a node prefab
@@ -55,7 +46,7 @@ public class GenerateGrid : MonoBehaviour
         while (transform.childCount > 0)
         {
             //...destroy them
-            GameObject.DestroyImmediate(transform.GetChild(0).gameObject);
+            Destroy(transform.GetChild(0).gameObject);
         }
     }
 
