@@ -16,13 +16,17 @@ public class Spawner : MonoBehaviour
 
     void Update()
     {
+        //If the level has loaded
         if (startSpawn && GameManager.levelLoaded)
         {
+            //Set startspawn to false (makes this code only run once)
             startSpawn = false;
 
+            //Set initial spawn
             nextSpawnTime = Time.time + spawnTime;
         }
 
+        //If the level has been loaded
         if (GameManager.levelLoaded)
         {
             //If it is time to spawn another enemy

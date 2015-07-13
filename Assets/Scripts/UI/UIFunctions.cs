@@ -16,11 +16,13 @@ public class UIFunctions : MonoBehaviour
         Application.LoadLevel(name);
     }
 
+    //Sets currently selected world
     public void SetWorld(int number)
     {
         PlayerPrefs.SetInt("world", number);
     }
 
+    //Sets the currently selected level
     public void SetLevel(int number)
     {
         PlayerPrefs.SetInt("level", number);

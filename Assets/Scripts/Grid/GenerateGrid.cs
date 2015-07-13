@@ -21,6 +21,7 @@ public class GenerateGrid : MonoBehaviour
 
     void Update()
     {
+        //If the grid shall generate, and the level has loaded
         if (generateGrid && GameManager.levelLoaded)
         {
             generateGrid = false;
@@ -72,10 +73,12 @@ public class GenerateGrid : MonoBehaviour
                     //Change it's name to reflect its grid position
                     node.name = nodePrefab.name + x + "x" + y + "y";
 
+                    //If the ray did not collide with a path
                     if (hitInfo.collider.tag != pathTag)
                     {
                         Node n = node.GetComponent<Node>();
 
+                        //Make this node a build node
                         n.canPlace = true;
                         n.isAvailable = true;
                     }
