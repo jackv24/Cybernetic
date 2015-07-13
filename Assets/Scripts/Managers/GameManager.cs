@@ -14,6 +14,10 @@ public class GameManager : MonoBehaviour
     //Static instance of the waypoint manager (attached to the level)
     public static WaypointManager waypointManager;
 
+    //Tower selection static references
+    public static SelectTowers selectTowers;
+    public static TowerTooltip towerTooltip;
+
     //Has the level been loaded?
     public static bool levelLoaded = false;
 

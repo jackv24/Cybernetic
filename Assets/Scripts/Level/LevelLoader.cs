@@ -3,36 +3,22 @@ using System.Collections;
 
 public class LevelLoader : MonoBehaviour
 {
-    //World of level
-    public int world = 1;
-    //Level to load within world
-    public int level = 1;
-
-    void Awake()
-    {
-        //Set values for world and level (if no values are stores, use world 1 level 1 as default)
-        world = PlayerPrefs.GetInt("world", 1);
-        level = PlayerPrefs.GetInt("level", 1);
-    }
+    //Array of prefabs to instantiate when on level load
+    public GameObject[] prefabs;
 
     void Start()
     {
-        //If there is already a level child, disable it
-        if (transform.childCount == 1)
-            transform.GetChild(0).gameObject.SetActive(false);
-
-        //Load level prefab from resouces
-        GameObject levelPrefab = Resources.Load<GameObject>("Levels/World " + world + "/Level " + level);
-
-        //If the level prefab was successfully loaded
-        if (levelPrefab)
+        //Iterate through array
+        for (int i = 0; i < prefabs.Length; i++)
         {
-            //Instantiate the level as a child of this transform
-            GameObject levelObj = Instantiate(levelPrefab, levelPrefab.transform.position, levelPrefab.transform.rotation) as GameObject;
-            levelObj.transform.parent = transform;
+            //Instantiate gameobject
+            GameObject obj = Instantiate(prefabs[i], prefabs[i].transform.position, prefabs[i].transform.rotation) as GameObject;
 
-            //Set level loaded bool to true (allows other managers to start)
-            GameManager.levelLoaded = true;
+            //Set name to original
+            obj.name = prefabs[i].name;
         }
+
+        //Mark level as loaded
+        GameManager.levelLoaded = true;
     }
 }

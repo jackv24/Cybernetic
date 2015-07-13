@@ -4,10 +4,8 @@ using System.Collections;
 [RequireComponent(typeof(PlaceTowers))]
 public class SelectTowers : MonoBehaviour
 {
-    //The selected tower tooltip
-    public GameObject tooltip;
     //Holds a reference to the script on this tooltip
-    private TowerTooltip towerTooltip;
+    public TowerTooltip towerTooltip;
 
     //The height to display the tooltip above a node
     public float toolTipHeight = 1f;
@@ -25,8 +23,8 @@ public class SelectTowers : MonoBehaviour
 
     void Start()
     {
-        //Gets a reference to the tooltip script
-        towerTooltip = tooltip.GetComponent<TowerTooltip>();
+        GameManager.selectTowers = this;
+        towerTooltip = GameManager.towerTooltip;
 
         //Gets a reference to the placetowers script on this gameobject
         placeTowers = GetComponent<PlaceTowers>();
@@ -50,17 +48,16 @@ public class SelectTowers : MonoBehaviour
                 selectedNode = hitInfo.collider.GetComponent<Node>();
 
                 //If there is a tower occupying this node
-                if (selectedNode.occupyingTower)
+                if (selectedNode.occupyingTower && towerTooltip)
                 {
                     //Set the selected tower to the node's occupying tower
                     selectedTower = selectedNode.occupyingTower;
 
                     //Enables the tooltip
-                    tooltip.SetActive(true);
+                    towerTooltip.gameObject.SetActive(true);
 
                     //Set tooltip references
                     towerTooltip.selectedNode = selectedNode;
-                    towerTooltip.selectTowers = this;
 
                     //If a node was previously selected
                     if (lastSelectedNode)
@@ -99,6 +96,6 @@ public class SelectTowers : MonoBehaviour
         //Reset references
         selectedTower = null;
         //Deactivate it
-        tooltip.SetActive(false);
+        towerTooltip.gameObject.SetActive(false);
     }
 }

@@ -28,11 +28,10 @@ public class TowerTooltip : MonoBehaviour
     //Currently selected tower
     public TowerStats towerStats;
 
-    [HideInInspector] //Stores a reference to the selectTowers script (which is set by that script, hence the public variable)
-    public SelectTowers selectTowers;
-
     void Start()
     {
+        GameManager.towerTooltip = this;
+
         //Set initial text values
         initialHealthText = healthText.text;
         initialLevelText = levelText.text;
@@ -63,10 +62,10 @@ public class TowerTooltip : MonoBehaviour
     public void ClearNode()
     {
         //Refunds the tower
-        GameManager.resourceManager.Refund(selectTowers.selectedTower.GetComponent<TowerStats>());
+        GameManager.resourceManager.Refund(GameManager.selectTowers.selectedTower.GetComponent<TowerStats>());
         //Clears the node
         selectedNode.Clear();
         //Removes tooltip
-        selectTowers.RemoveTooltip();
+        GameManager.selectTowers.RemoveTooltip();
     }
 }

@@ -12,6 +12,7 @@ public class Spawner : MonoBehaviour
     //The time at which the next enemy will spawn
     private float nextSpawnTime;
 
+    //Should enemies start spawning?
     private bool startSpawn = true;
 
     void Update()

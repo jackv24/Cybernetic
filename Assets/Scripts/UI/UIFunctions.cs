@@ -4,6 +4,9 @@ using System.Collections;
 //A class dedicated to basic UI functions to be controlled through the Unity 4.6 UI system
 public class UIFunctions : MonoBehaviour
 {
+    private int selectedWorld = 0;
+    private int selectedLevel = 0;
+
     //Load scene with id
     public void LoadScene(int id)
     {
@@ -19,12 +22,22 @@ public class UIFunctions : MonoBehaviour
     //Sets currently selected world
     public void SetWorld(int number)
     {
-        PlayerPrefs.SetInt("world", number);
+        selectedWorld = number;
     }
 
     //Sets the currently selected level
     public void SetLevel(int number)
     {
-        PlayerPrefs.SetInt("level", number);
+        selectedLevel = number;
+    }
+    
+    //Loads the selected level with a template string name
+    public void LoadSelectedLevel()
+    {
+        //The template for scene name
+        string levelStringTemplate = "W{0}_Level{1}";
+
+        //Load level template with substituded world and level
+        Application.LoadLevel(string.Format(levelStringTemplate, selectedWorld, selectedLevel));
     }
 }
