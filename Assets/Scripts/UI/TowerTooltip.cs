@@ -36,7 +36,6 @@ public class TowerTooltip : MonoBehaviour
         initialHealthText = healthText.text;
         initialLevelText = levelText.text;
 
-        //Hide the tooltip
         gameObject.SetActive(false);
     }
 
@@ -56,6 +55,7 @@ public class TowerTooltip : MonoBehaviour
             healthText.text = string.Format(initialHealthText, towerStats.currentHealth, towerStats.maxHealth);
             levelText.text = string.Format(initialLevelText, towerStats.currentLevel, towerStats.maxLevel);
         }
+        
     }
 
     //Clears the selected node

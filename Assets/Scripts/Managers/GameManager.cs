@@ -18,8 +18,13 @@ public class GameManager : MonoBehaviour
     public static SelectTowers selectTowers;
     public static TowerTooltip towerTooltip;
 
+    //Stores reference to level information script
+    public static LevelInfo levelInfo;
+
     //Has the level been loaded?
     public static bool levelLoaded = false;
+    //Should the game start?
+    public static bool startGame = false;
 
     void Start()
     {

@@ -75,6 +75,9 @@ public class SelectTowers : MonoBehaviour
                 }
                 else //If there is no tower on this node
                 {
+                    if (!towerTooltip)
+                        towerTooltip = GameManager.towerTooltip;
+
                     //Hide the tooltip
                     RemoveTooltip();
 

@@ -40,4 +40,22 @@ public class UIFunctions : MonoBehaviour
         //Load level template with substituded world and level
         Application.LoadLevel(string.Format(levelStringTemplate, selectedWorld, selectedLevel));
     }
+
+    //Sets game as started in game manager
+    public void StartGame()
+    {
+        GameManager.startGame = true;
+    }
+
+    //Disables the gameobject
+    public void HideGameObject(GameObject hide)
+    {
+        hide.SetActive(false);
+    }
+
+    //Enables the gameobject
+    public void ShowGameObject(GameObject show)
+    {
+        show.SetActive(true);
+    }
 }
