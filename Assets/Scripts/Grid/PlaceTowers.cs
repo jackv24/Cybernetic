@@ -17,6 +17,8 @@ public class PlaceTowers : MonoBehaviour
     //The last node wich was selected
     private Node lastNode;
 
+    public bool canPlace = true;
+
     void Start()
     {
         //Set cam as the main camera
@@ -25,6 +27,8 @@ public class PlaceTowers : MonoBehaviour
 
     void Update()
     {
+        canPlace = !GameManager.roundManager.isDefendRound;
+
         //Create a ray from the cursors position on the screen
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hitInfo;
@@ -42,7 +46,7 @@ public class PlaceTowers : MonoBehaviour
                 HoverNode(node);
 
                 //If the node is avalable, and the click button is pressed when the cursor is not over a UI element
-                if (node.isAvailable && Input.GetButton("Click") && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+                if (canPlace && node.isAvailable && Input.GetButton("Click") && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
                 {
                     //If there are enough resources available
                     if (GameManager.resourceManager.resources >= towerPrefab.GetComponent<TowerStats>().cost)

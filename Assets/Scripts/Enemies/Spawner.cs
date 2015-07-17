@@ -7,46 +7,41 @@ public class Spawner : MonoBehaviour
     public GameObject enemyPrefab;
 
     //Time between spawns
-    public float spawnTime = 1;
+    private float spawnTime = 1f;
 
-    //The time at which the next enemy will spawn
-    private float nextSpawnTime;
+    private int enemiesToSpawn = 0;
 
-    //Should enemies start spawning?
-    private bool startSpawn = true;
-
-    void Update()
+    void Start()
     {
-        //If the level has loaded
-        if (startSpawn && GameManager.startGame)
+        GameManager.spawner = this;
+    }
+
+    public void StartSpawn(int enemyAmount, float spawnInterval)
+    {
+        spawnTime = spawnInterval;
+
+        enemiesToSpawn = enemyAmount;
+
+        StartCoroutine("SpawnTimer");
+    }
+
+    IEnumerator SpawnTimer()
+    {
+        while (enemiesToSpawn > 0)
         {
-            //Set startspawn to false (makes this code only run once)
-            startSpawn = false;
+            yield return new WaitForSeconds(spawnTime);
 
-            //Set initial spawn
-            nextSpawnTime = Time.time + spawnTime;
-        }
+            Spawn();
 
-        //If the level has been loaded
-        if (GameManager.startGame)
-        {
-            //If it is time to spawn another enemy
-            if (nextSpawnTime <= Time.time)
-            {
-                //Set new spawn time
-                nextSpawnTime += spawnTime;
-
-                //Spawn enemy
-                Spawn(enemyPrefab);
-            }
+            enemiesToSpawn--;
         }
     }
 
     //Spawns an enemy prefab
-    void Spawn(GameObject spawn)
+    void Spawn()
     {
-        GameObject obj = Instantiate(spawn, new Vector3(transform.position.x, spawn.transform.position.y, transform.position.z), spawn.transform.rotation) as GameObject;
+        GameObject obj = Instantiate(enemyPrefab, new Vector3(transform.position.x, enemyPrefab.transform.position.y, transform.position.z), enemyPrefab.transform.rotation) as GameObject;
 
-        obj.name = spawn.name;
+        obj.name = enemyPrefab.name;
     }
 }

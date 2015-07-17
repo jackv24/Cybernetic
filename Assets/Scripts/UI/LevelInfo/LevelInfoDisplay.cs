@@ -14,20 +14,25 @@ public class LevelInfoDisplay : MonoBehaviour
 
     void Start()
     {
+        //If there is level information to load
         if (GameManager.levelInfo)
         {
+            //Set the number of rounds
             info.text = "Rounds: " + GameManager.levelInfo.rounds.Length;
 
+            //Set the initial column text, ending with a newline
             rounds.text = "Round\n";
             enemies.text = "Enemies\n";
             speed.text = "Speed\n";
 
+            //Iterate through all round array items
             for (int i = 0; i < GameManager.levelInfo.rounds.Length; i++)
             {
+                //Display current round
                 rounds.text += i + 1 + "\n";
-
+                //Display amount of enemies for that round
                 enemies.text += GameManager.levelInfo.rounds[i].enemies + "\n";
-
+                //Display the speed multipler of those enemies
                 speed.text += "x" + GameManager.levelInfo.rounds[i].speed + "\n";
             }
         }

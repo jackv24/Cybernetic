@@ -26,6 +26,11 @@ public class GameManager : MonoBehaviour
     //Should the game start?
     public static bool startGame = false;
 
+    public static RoundManager roundManager;
+
+    public static BaseHealth baseHealth;
+    public static Spawner spawner;
+
     void Start()
     {
         //Set the instance for this game manager
@@ -35,5 +40,6 @@ public class GameManager : MonoBehaviour
         resourceManager = GetComponent<ResourceManager>();
         towerDatabase = GetComponent<TowerDatabase>();
         enemyManager = GetComponent<EnemyManager>();
+        roundManager = GetComponent<RoundManager>();
     }
 }
