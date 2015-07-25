@@ -13,7 +13,7 @@ public class EnemyStats : MonoBehaviour
     void Start()
     {
         //Add self to enemies list
-        GameManager.enemyManager.enemies.Add(gameObject);
+        GameManager.enemyManager.currentEnemies.Add(gameObject);
     }
 
     void Update()

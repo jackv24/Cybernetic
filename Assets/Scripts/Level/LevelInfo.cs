@@ -24,6 +24,9 @@ public class Round
     //How many enemies in this round?
     public int enemies = 5;
 
-    //How fast will the enemies move (speed multiplier)
-    public float speed = 1f;
+    //Maximum level of enemy to spawn
+    public int maxSpawnLevel = 0;
+
+    //How fast enemies spawn this round
+    public float spawnRate = 1f;
 }

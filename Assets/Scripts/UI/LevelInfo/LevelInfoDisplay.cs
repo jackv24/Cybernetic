@@ -10,7 +10,7 @@ public class LevelInfoDisplay : MonoBehaviour
     //Display text for rounds, enemies and speed
     public Text rounds;
     public Text enemies;
-    public Text speed;
+    public Text spawnRate;
 
     void Start()
     {
@@ -23,7 +23,7 @@ public class LevelInfoDisplay : MonoBehaviour
             //Set the initial column text, ending with a newline
             rounds.text = "Round\n";
             enemies.text = "Enemies\n";
-            speed.text = "Speed\n";
+            spawnRate.text = "Speed\n";
 
             //Iterate through all round array items
             for (int i = 0; i < GameManager.levelInfo.rounds.Length; i++)
@@ -33,7 +33,7 @@ public class LevelInfoDisplay : MonoBehaviour
                 //Display amount of enemies for that round
                 enemies.text += GameManager.levelInfo.rounds[i].enemies + "\n";
                 //Display the speed multipler of those enemies
-                speed.text += "x" + GameManager.levelInfo.rounds[i].speed + "\n";
+                spawnRate.text += GameManager.levelInfo.rounds[i].spawnRate + "\n";
             }
         }
     }

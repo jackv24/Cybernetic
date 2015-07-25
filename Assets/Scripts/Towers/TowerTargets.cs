@@ -24,7 +24,7 @@ public class TowerTargets : MonoBehaviour
             float dist = towerStats.range;
 
             //Iterate through all possible enemy targets
-            foreach (GameObject enemy in GameManager.enemyManager.enemies)
+            foreach (GameObject enemy in GameManager.enemyManager.currentEnemies)
             {
                 //If the enemy is closest
                 if (Vector3.Distance(transform.position, enemy.transform.position) < dist)

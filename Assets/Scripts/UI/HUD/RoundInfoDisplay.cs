@@ -15,11 +15,13 @@ public class RoundInfoDisplay : MonoBehaviour
 
     void Update()
     {
+        string roundText = GameManager.roundManager.currentRound + 1 + "/" + GameManager.roundManager.rounds.Length;
+
         //If this is a defend round
-        if(GameManager.roundManager.isDefendRound)
-            infoText.text = string.Format(initialInfoText, GameManager.roundManager.currentRound + 1, "Defend");
+        if (GameManager.roundManager.isDefendRound)
+            infoText.text = string.Format(initialInfoText, roundText, "Defend");
         //If this is a build round
         else
-            infoText.text = string.Format(initialInfoText, GameManager.roundManager.currentRound + 1, "Build");
+            infoText.text = string.Format(initialInfoText, roundText, "Build");
     }
 }
