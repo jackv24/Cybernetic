@@ -16,7 +16,7 @@ public class BaseHealthDisplay : MonoBehaviour
 
     void Update()
     {
-        healthBar.value = baseHealth.currentHealth / baseHealth.maxHealth;
+        healthBar.value = (float)baseHealth.currentHealth / baseHealth.maxHealth;
 
         healthText.text = "Health: " + baseHealth.currentHealth + "/" + baseHealth.maxHealth;
     }

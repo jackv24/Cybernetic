@@ -8,6 +8,8 @@ public class EnemyStats : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth = 100;
 
+    public int attackPower = 10;
+
     public int resources = 2;
 
     void Start()
@@ -39,7 +41,7 @@ public class EnemyStats : MonoBehaviour
         currentHealth += value;
     }
 
-    void Die()
+    public void Die()
     {
         //Remove self from enemies list
         GameManager.enemyManager.RegisterDeath(gameObject, resources);

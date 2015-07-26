@@ -24,6 +24,18 @@ public class BaseHealth : MonoBehaviour
             currentHealth = 0;
     }
 
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.tag == "Enemy")
+        {
+            EnemyStats enemy = col.GetComponent<EnemyStats>();
+
+            RemoveHealth(enemy.attackPower);
+
+            enemy.Die();
+        }
+    }
+
     public void RemoveHealth(int value)
     {
         currentHealth -= value;
@@ -36,6 +48,6 @@ public class BaseHealth : MonoBehaviour
 
     void Die()
     {
-        Destroy(gameObject);
+        Debug.Log("Game Lost");
     }
 }
