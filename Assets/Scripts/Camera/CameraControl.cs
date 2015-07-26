@@ -36,43 +36,59 @@ public class CameraControl : MonoBehaviour
         //If there is no target, create one.
         if (!target)
             target = new GameObject("Target").transform;
+
+        //If a levelcenter gameobject exists
+        if (GameObject.Find("LevelCenter"))
+        {
+            Transform center = GameObject.Find("LevelCenter").transform;
+            //Position the target at the centre of the level
+            target.position = center.position;
+        }
     }
 
     //LateUpdate is used to make sure the camera moves during the same frame as the target, instead of the frame after
     void LateUpdate()
     {
-        if (Input.GetButton("Move Camera"))
+        //If the game hasn't started, dont execute the rest of the code
+        if (GameManager.startGame)
         {
-            target.eulerAngles = new Vector3(target.eulerAngles.x, transform.eulerAngles.y, target.eulerAngles.z);
+            if (Input.GetButton("Move Camera"))
+            {
+                target.eulerAngles = new Vector3(target.eulerAngles.x, transform.eulerAngles.y, target.eulerAngles.z);
 
-            target.Translate(new Vector3(-Input.GetAxis("Mouse X"), 0, -Input.GetAxis("Mouse Y")) * moveSpeed * Time.deltaTime);
+                target.Translate(new Vector3(-Input.GetAxis("Mouse X"), 0, -Input.GetAxis("Mouse Y")) * moveSpeed * Time.deltaTime);
+            }
+
+            //Don't do anything if no target is registered.
+            if (target == null)
+                return;
+
+            if (Input.GetButton("Right Click"))
+                OrbitCamera(new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")));
+
+            //Zoom
+            if (Input.GetAxisRaw("Mouse ScrollWheel") > 0)
+                CameraDistance -= CameraZoomSpeed * Time.deltaTime;
+            else if (Input.GetAxisRaw("Mouse ScrollWheel") < 0)
+                CameraDistance += CameraZoomSpeed * Time.deltaTime;
+
+            CameraDistance = Mathf.Clamp(CameraDistance, CameraDistanceMin, CameraDistanceMax);
         }
-
-        //Don't do anything if no target is registered.
-        if (target == null)
-            return;
-
-        if (Input.GetButton("Right Click"))
-        {
-            //Move camera up/down
-            CameraPitch -= Input.GetAxis("Mouse Y") * CameraSensitivity * Time.deltaTime;
-            CameraPitch = Mathf.Clamp(CameraPitch, CameraPitchMin, CameraPitchMax);
-
-            //Move camera left/right
-            transform.localEulerAngles = new Vector3(CameraPitch, transform.localEulerAngles.y + Input.GetAxis("Mouse X") * CameraSensitivity * Time.deltaTime, 0);
-            transform.localEulerAngles = new Vector3(CameraPitch, transform.localEulerAngles.y, 0);
-        }
-
-        //Zoom
-        if (Input.GetAxisRaw("Mouse ScrollWheel") > 0)
-            CameraDistance -= CameraZoomSpeed * Time.deltaTime;
-        else if (Input.GetAxisRaw("Mouse ScrollWheel") < 0)
-            CameraDistance += CameraZoomSpeed * Time.deltaTime;
-
-        CameraDistance = Mathf.Clamp(CameraDistance, CameraDistanceMin, CameraDistanceMax);
 
         transform.position = new Vector3(target.position.x, target.position.y, target.position.z);
         transform.position += transform.rotation * Vector3.back * CameraDistance;
         transform.position += Vector3.up * CameraHeight;
+    }
+
+    //Function seperated for cameraorbit script
+    public void OrbitCamera(Vector2 input)
+    {
+        //Move camera up/down
+        CameraPitch -= input.y * CameraSensitivity * Time.deltaTime;
+        CameraPitch = Mathf.Clamp(CameraPitch, CameraPitchMin, CameraPitchMax);
+
+        //Move camera left/right
+        transform.localEulerAngles = new Vector3(CameraPitch, transform.localEulerAngles.y + input.x * CameraSensitivity * Time.deltaTime, 0);
+        transform.localEulerAngles = new Vector3(CameraPitch, transform.localEulerAngles.y, 0);
     }
 }
