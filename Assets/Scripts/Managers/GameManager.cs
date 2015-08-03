@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     public static bool startGame = false;
 
     public static RoundManager roundManager;
+    public static float enemySpeed = 1f;
 
     public static BaseHealth baseHealth;
     public static Spawner spawner;
@@ -41,5 +42,13 @@ public class GameManager : MonoBehaviour
         towerDatabase = GetComponent<TowerDatabase>();
         enemyManager = GetComponent<EnemyManager>();
         roundManager = GetComponent<RoundManager>();
+    }
+
+    public void EndGame(bool gameWon)
+    {
+        if (gameWon)
+            Debug.Log("Game Won!");
+        else
+            Debug.Log("Game Lost...");
     }
 }

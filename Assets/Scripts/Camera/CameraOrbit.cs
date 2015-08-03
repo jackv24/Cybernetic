@@ -20,10 +20,10 @@ public class CameraOrbit : MonoBehaviour
         //If the game has not started
         if (!GameManager.startGame)
         {
-            Vector2 orbitVector = Vector2.left * speed;
+            Vector2 orbitVector = Vector2.right * speed;
 
             //Oribit the camera
-            cam.OrbitCamera(orbitVector * Time.deltaTime);
+            cam.OrbitCamera(orbitVector);
         }
     }
 }

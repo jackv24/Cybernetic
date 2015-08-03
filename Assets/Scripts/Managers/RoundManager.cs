@@ -65,7 +65,7 @@ public class RoundManager : MonoBehaviour
             StartCoroutine("BuildRoundTimer");
         }
         else
-            Debug.Log("Level Complete");
+            GameManager.gameManager.EndGame(true);
     }
 
     //A coroutine to time the length of the build round
@@ -95,8 +95,9 @@ public class RoundManager : MonoBehaviour
     {
         //Gets the amount of enemies to spawn this round
         enemies = rounds[currentRound].enemies;
-        //Tells the enemy manager to spawn the correct amount of enemies (1 every second - temporary value)
+        //Tells the enemy manager to spawn the correct amount of enemies
         GameManager.enemyManager.StartSpawn(enemies, rounds[currentRound].spawnRate);
+        GameManager.enemySpeed = rounds[currentRound].spawnRate;
 
         //Updates the current round bool value
         isDefendRound = true;

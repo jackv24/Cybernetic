@@ -48,6 +48,6 @@ public class BaseHealth : MonoBehaviour
 
     void Die()
     {
-        Debug.Log("Game Lost");
+        GameManager.gameManager.EndGame(false);
     }
 }

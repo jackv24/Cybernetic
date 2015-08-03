@@ -5,6 +5,7 @@ public class EnemyMovement : MonoBehaviour
 {
     //Movement speed
     public float speed = 1f;
+    private float currentSpeed = 1f;
 
     //The height at which the enemy will spawn
     private float height;
@@ -17,6 +18,8 @@ public class EnemyMovement : MonoBehaviour
     void Start()
     {
         waypointManager = GameManager.waypointManager;
+
+        currentSpeed = speed;
 
         //Set enemy height to intitial y value
         height = transform.position.y;
@@ -33,10 +36,12 @@ public class EnemyMovement : MonoBehaviour
                 //Target position to move towards
                 Vector3 targetPos = new Vector3(waypointManager.wayPoints[target].position.x, waypointManager.wayPoints[target].position.y + height, waypointManager.wayPoints[target].position.z);
 
+                currentSpeed = speed * GameManager.enemySpeed;
+
                 //If the enemy has not yet reached the waypoint
                 if (transform.position != targetPos)
                     //Move towards the waypoint at speed with respect to time
-                    transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
+                    transform.position = Vector3.MoveTowards(transform.position, targetPos, currentSpeed * Time.deltaTime);
                 else //If the enemy has reached the waypoint
                     target++; //Set the target waypoint next
             }

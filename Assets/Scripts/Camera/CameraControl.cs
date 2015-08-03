@@ -64,7 +64,7 @@ public class CameraControl : MonoBehaviour
                 return;
 
             if (Input.GetButton("Right Click"))
-                OrbitCamera(new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")));
+                OrbitCamera(new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")) * CameraSensitivity);
 
             //Zoom
             if (Input.GetAxisRaw("Mouse ScrollWheel") > 0)
@@ -84,11 +84,11 @@ public class CameraControl : MonoBehaviour
     public void OrbitCamera(Vector2 input)
     {
         //Move camera up/down
-        CameraPitch -= input.y * CameraSensitivity * Time.deltaTime;
+        CameraPitch -= input.y * Time.deltaTime;
         CameraPitch = Mathf.Clamp(CameraPitch, CameraPitchMin, CameraPitchMax);
 
         //Move camera left/right
-        transform.localEulerAngles = new Vector3(CameraPitch, transform.localEulerAngles.y + input.x * CameraSensitivity * Time.deltaTime, 0);
+        transform.localEulerAngles = new Vector3(CameraPitch, transform.localEulerAngles.y + input.x * Time.deltaTime, 0);
         transform.localEulerAngles = new Vector3(CameraPitch, transform.localEulerAngles.y, 0);
     }
 }
