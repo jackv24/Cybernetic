@@ -22,6 +22,9 @@ public class TowerTooltip : MonoBehaviour
     //Initial text value for formatting
     private string initialLevelText;
 
+    public Text infoText;
+    private string infoTextString;
+
     //Stores the selected node
     public Node selectedNode;
 
@@ -35,6 +38,7 @@ public class TowerTooltip : MonoBehaviour
         //Set initial text values
         initialHealthText = healthText.text;
         initialLevelText = levelText.text;
+        infoTextString = infoText.text;
 
         gameObject.SetActive(false);
     }
@@ -54,6 +58,12 @@ public class TowerTooltip : MonoBehaviour
             //Update text values
             healthText.text = string.Format(initialHealthText, towerStats.currentHealth, towerStats.maxHealth);
             levelText.text = string.Format(initialLevelText, towerStats.currentLevel, towerStats.maxLevel);
+
+            infoText.text = string.Format(infoTextString,
+                towerStats.maxHealth,
+                towerStats.speed,
+                towerStats.range
+                );
         }
         
     }

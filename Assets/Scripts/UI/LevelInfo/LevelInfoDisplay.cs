@@ -33,7 +33,7 @@ public class LevelInfoDisplay : MonoBehaviour
                 //Display amount of enemies for that round
                 enemies.text += GameManager.levelInfo.rounds[i].enemies + "\n";
                 //Display the speed multipler of those enemies
-                spawnRate.text += GameManager.levelInfo.rounds[i].spawnRate + "\n";
+                spawnRate.text += "x" + GameManager.levelInfo.rounds[i].spawnRate + "\n";
             }
         }
     }

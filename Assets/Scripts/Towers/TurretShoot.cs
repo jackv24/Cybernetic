@@ -12,7 +12,7 @@ public class TurretShoot : MonoBehaviour
     public Transform muzzle;
 
     //Delay between shots
-    public float fireTime = 2.0f;
+    private float fireTime = 2.0f;
     //Counter till next shot
     private float nextFireTime = 0;
 
@@ -23,6 +23,8 @@ public class TurretShoot : MonoBehaviour
     {
         //Gets a reference to the tower target script attached to this tower
         towerTargets = GetComponent<TowerTargets>();
+
+        fireTime = GetComponent<TowerStats>().speed;
 
         //Set the initial time till next shot
         nextFireTime = Time.time + fireTime;

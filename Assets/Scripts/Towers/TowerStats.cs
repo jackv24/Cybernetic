@@ -9,8 +9,10 @@ public class TowerStats : MonoBehaviour
     //How much the tower costs to build
     public int cost = 10;
 
+    //Attack speed
+    public float speed = 2.0f;
     //Attack range
-    public float range = 2f;
+    public float range = 2.0f;
 
     //Current health
     public int currentHealth = 100;
