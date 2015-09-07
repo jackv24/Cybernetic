@@ -47,8 +47,12 @@ public class GameManager : MonoBehaviour
     public void EndGame(bool gameWon)
     {
         if (gameWon)
-            Debug.Log("Game Won!");
+        {
+            GameEndUI.instance.SetActive(true);
+        }
         else
+        {
             Debug.Log("Game Lost...");
+        }
     }
 }

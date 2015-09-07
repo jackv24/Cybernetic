@@ -3,6 +3,11 @@ using System.Collections;
 
 public class LevelInfo : MonoBehaviour
 {
+    public int world = 1;
+    public string subtitle = "The Basics";
+
+    public int level = 1;
+
     //An array of rounds in the level
     public Round[] rounds;
 
