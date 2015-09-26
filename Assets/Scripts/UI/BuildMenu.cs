@@ -48,13 +48,6 @@ public class BuildMenu : MonoBehaviour
 
             //Get references to build menu and tower stats
             BuildMenuItem buildMenuItem = menuItem.GetComponent<BuildMenuItem>();
-            TowerStats towerStats = towerDatabase.towers[i].GetComponent<TowerStats>();
-
-            //Set menu item data
-            buildMenuItem.towerName = towerStats.towerName;
-            buildMenuItem.health = towerStats.maxHealth;
-            buildMenuItem.range = towerStats.range;
-            buildMenuItem.cost = towerStats.cost;
 
             //Set's the menu item's tower prefab
             buildMenuItem.towerPrefab = towerDatabase.towers[i];

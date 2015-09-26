@@ -25,6 +25,8 @@ public class TowerTooltip : MonoBehaviour
     public Text infoText;
     private string infoTextString;
 
+    public Text upgradeText;
+
     //Stores the selected node
     public Node selectedNode;
 
@@ -52,18 +54,29 @@ public class TowerTooltip : MonoBehaviour
             titleText.text = towerStats.towerName;
 
             //Update slider values
-            healthBar.value = (float)towerStats.currentHealth / towerStats.maxHealth;
-            levelBar.value = (float)towerStats.currentHealth / towerStats.maxHealth;
+            healthBar.value = (float)towerStats.currentHealth / towerStats.levels[towerStats.currentLevel].maxHealth;
+            levelBar.value = (float)(towerStats.currentLevel+1) / towerStats.levels.Length;
 
             //Update text values
-            healthText.text = string.Format(initialHealthText, towerStats.currentHealth, towerStats.maxHealth);
-            levelText.text = string.Format(initialLevelText, towerStats.currentLevel, towerStats.maxLevel);
+            healthText.text = string.Format(initialHealthText, towerStats.currentHealth, towerStats.levels[towerStats.currentLevel].maxHealth);
+            levelText.text = string.Format(initialLevelText, towerStats.currentLevel + 1, towerStats.levels.Length);
 
-            infoText.text = string.Format(infoTextString,
-                towerStats.maxHealth,
-                towerStats.speed,
-                towerStats.range
-                );
+            if (towerStats.currentLevel + 1 < towerStats.levels.Length)
+            {
+                infoText.text = string.Format(infoTextString,
+                    towerStats.levels[towerStats.currentLevel + 1].maxHealth,
+                    towerStats.levels[towerStats.currentLevel + 1].speed,
+                    towerStats.levels[towerStats.currentLevel + 1].range
+                    );
+
+                upgradeText.text = string.Format("Upgrade ({0})", towerStats.levels[towerStats.currentLevel + 1].cost);
+            }
+            else
+            {
+                infoText.text = "Fully Upgraded";
+
+                upgradeText.text = "Upgrade (X)";
+            }
         }
         
     }
@@ -77,5 +90,10 @@ public class TowerTooltip : MonoBehaviour
         selectedNode.Clear();
         //Removes tooltip
         GameManager.selectTowers.RemoveTooltip();
+    }
+
+    public void Upgrade()
+    {
+        towerStats.Upgrade();
     }
 }

@@ -21,7 +21,7 @@ public class TowerTargets : MonoBehaviour
         if (!target)
         {
             //Minimum distance
-            float dist = towerStats.range;
+            float dist = towerStats.levels[towerStats.currentLevel].range;
 
             //Iterate through all possible enemy targets
             foreach (GameObject enemy in GameManager.enemyManager.currentEnemies)
@@ -39,7 +39,7 @@ public class TowerTargets : MonoBehaviour
         }
 
         //If the target goes out of range
-        if(target && Vector3.Distance(transform.position, target.position) > towerStats.range)
+        if(target && Vector3.Distance(transform.position, target.position) > towerStats.levels[towerStats.currentLevel].range)
         {
             //Set target as null
             target = null;

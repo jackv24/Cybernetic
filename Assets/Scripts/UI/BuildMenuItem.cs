@@ -13,7 +13,7 @@ public class BuildMenuItem : MonoBehaviour
     //Tower variable
     public string towerName = "";
     public int health = 0;
-    public int speed = 0;
+    public float speed = 0;
     public int power = 0;
     public float range = 0;
     public int cost = 0;
@@ -26,6 +26,14 @@ public class BuildMenuItem : MonoBehaviour
 
     void Start()
     {
+        TowerStats towerStats = towerPrefab.GetComponent<TowerStats>();
+
+        towerName = towerStats.towerName;
+        cost = towerStats.levels[towerStats.currentLevel].cost;
+        health = towerStats.currentHealth;
+        speed = towerStats.levels[towerStats.currentLevel].speed;
+        range = towerStats.levels[towerStats.currentLevel].range;
+
         //Set the new text value by formatting the original with data
         infoText.text = string.Format(infoText.text, 
             towerName, 

@@ -44,6 +44,6 @@ public class ResourceManager : MonoBehaviour
     public void Refund(TowerStats towerStats)
     {
         //Refunds some of the cost of the tower
-        AddResources(Mathf.RoundToInt(towerStats.GetComponent<TowerStats>().cost * (refundPercent / 100)));
+        AddResources(Mathf.RoundToInt(towerStats.levels[towerStats.currentLevel].cost * (refundPercent / 100)));
     }
 }

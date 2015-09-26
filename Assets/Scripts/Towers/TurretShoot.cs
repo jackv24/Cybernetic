@@ -24,7 +24,7 @@ public class TurretShoot : MonoBehaviour
         //Gets a reference to the tower target script attached to this tower
         towerTargets = GetComponent<TowerTargets>();
 
-        fireTime = GetComponent<TowerStats>().speed;
+        fireTime = 1 / GetComponent<TowerStats>().levels[GetComponent<TowerStats>().currentLevel].speed;
 
         //Set the initial time till next shot
         nextFireTime = Time.time + fireTime;
@@ -40,6 +40,8 @@ public class TurretShoot : MonoBehaviour
             if (towerTargets.target)                
                 //Fire a projectile
                 Fire();
+
+            fireTime = 1 / GetComponent<TowerStats>().levels[GetComponent<TowerStats>().currentLevel].speed;
 
             //Set next fire time
             nextFireTime += fireTime;

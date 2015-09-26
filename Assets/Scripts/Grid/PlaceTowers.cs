@@ -49,7 +49,7 @@ public class PlaceTowers : MonoBehaviour
                 if (canPlace && node.isAvailable && Input.GetButton("Click") && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
                 {
                     //If there are enough resources available
-                    if (GameManager.resourceManager.resources >= towerPrefab.GetComponent<TowerStats>().cost)
+                    if (GameManager.resourceManager.resources >= towerPrefab.GetComponent<TowerStats>().levels[towerPrefab.GetComponent<TowerStats>().currentLevel].cost)
                     {
                         //Place the tower
                         Place(towerPrefab, node);
@@ -99,7 +99,7 @@ public class PlaceTowers : MonoBehaviour
         node.occupyingTower = tower;
 
         //Charge the cost of this tower
-        GameManager.resourceManager.RemoveResources(tower.GetComponent<TowerStats>().cost);
+        GameManager.resourceManager.RemoveResources(towerPrefab.GetComponent<TowerStats>().levels[towerPrefab.GetComponent<TowerStats>().currentLevel].cost);
     }
 
     //Sets the tower prefab to instantiate
