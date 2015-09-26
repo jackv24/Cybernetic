@@ -10,7 +10,7 @@ public class ResourceManager : MonoBehaviour
     private int lastResourcesValue = 0;
 
     //The percentage of cost to refund
-    public float refundPercent = 0.5f;
+    public float refundPercent = 50f;
 
     //The text to display resources
     public Text resourceText;
@@ -44,6 +44,6 @@ public class ResourceManager : MonoBehaviour
     public void Refund(TowerStats towerStats)
     {
         //Refunds some of the cost of the tower
-        AddResources(Mathf.RoundToInt(towerStats.GetComponent<TowerStats>().cost * (refundPercent)));
+        AddResources(Mathf.RoundToInt(towerStats.GetComponent<TowerStats>().cost * (refundPercent / 100)));
     }
 }

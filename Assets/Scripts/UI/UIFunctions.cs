@@ -7,6 +7,11 @@ public class UIFunctions : MonoBehaviour
     private int selectedWorld = 0;
     private int selectedLevel = 0;
 
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
     //Load scene with id
     public void LoadScene(int id)
     {
@@ -17,6 +22,22 @@ public class UIFunctions : MonoBehaviour
     public void LoadScene(string name)
     {
         Application.LoadLevel(name);
+    }
+
+    // Reloads the current loaded level
+    public void ReloadLevel()
+    {
+        //Makes sure game is not paused on reload
+        if (GameManager.gameManager.isGamePaused)
+            GameManager.gameManager.PauseGame(false);
+
+        Application.LoadLevel(Application.loadedLevel);
+    }
+
+    // Pauses the game
+    public void PauseGame(bool state)
+    {
+        GameManager.gameManager.PauseGame(state);
     }
 
     //Sets currently selected world

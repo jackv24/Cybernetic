@@ -32,6 +32,9 @@ public class GameManager : MonoBehaviour
     public static BaseHealth baseHealth;
     public static Spawner spawner;
 
+    public static PauseGame pauseGame;
+    public bool isGamePaused = false;
+
     void Start()
     {
         //Set the instance for this game manager
@@ -42,17 +45,48 @@ public class GameManager : MonoBehaviour
         towerDatabase = GetComponent<TowerDatabase>();
         enemyManager = GetComponent<EnemyManager>();
         roundManager = GetComponent<RoundManager>();
+
+        startGame = false;
     }
 
+    void Update()
+    {
+        //if the pause game ui object exists & the escape key is pressed
+        if (pauseGame && Input.GetButtonDown("Cancel") && startGame)
+        {
+            // Toggle the paused game state
+            PauseGame(!pauseGame.gameObject.activeSelf);
+        }
+    }
+
+    // Called by round manager
     public void EndGame(bool gameWon)
     {
+        //Get an instance of the game end UI (for access to non-static objects)
+        GameEndUI gameEndUI = GameEndUI.instance;
+
         if (gameWon)
         {
-            GameEndUI.instance.SetActive(true);
+            gameEndUI.GameWon();
         }
         else
         {
-            Debug.Log("Game Lost...");
+            gameEndUI.GameLost();
         }
+    }
+
+    //Pauses the game
+    public void PauseGame(bool state)
+    {
+        isGamePaused = state;
+
+        // Sets the active state of the ui object
+        pauseGame.gameObject.SetActive(state);
+
+        //Toggle the time scale
+        if (state)
+            Time.timeScale = 0;
+        else
+            Time.timeScale = 1;
     }
 }
