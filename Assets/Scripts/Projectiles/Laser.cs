@@ -33,6 +33,8 @@ public class Laser : MonoBehaviour
             EnemyStats health = col.gameObject.GetComponent<EnemyStats>();
 
             health.RemoveHealth(damage);
+
+            life = lifeTime;
         }
     }
 }

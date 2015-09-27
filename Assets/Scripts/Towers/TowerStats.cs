@@ -16,12 +16,19 @@ public class TowerStats : MonoBehaviour
 
     public void Upgrade()
     {
-        if (currentLevel + 1 < levels.Length)
+        if (currentLevel + 1 < levels.Length && GameManager.resourceManager.resources >= levels[currentLevel + 1].cost)
         {
             currentLevel++;
 
+            GameManager.resourceManager.RemoveResources(levels[currentLevel].cost);
+
             // Adds the health difference between levels to the tower's current health
             currentHealth += (levels[currentLevel].maxHealth - levels[currentLevel - 1].maxHealth);
+
+            if (levels[currentLevel].material)
+            {
+                GetComponent<TowerAppearance>().ChangeMaterial(levels[currentLevel].material);
+            }
         }
     }
 }
@@ -39,4 +46,7 @@ public class Tower
 
     //The max health the tower can have
     public int maxHealth = 100;
+
+    //The material to change to - optional
+    public Material material;
 }
