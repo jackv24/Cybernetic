@@ -36,25 +36,10 @@ public class EnemyManager : MonoBehaviour
     //Returns an enemy prefab
     public GameObject GetEnemyToSpawn()
     {
-        //a list of possible candidates to spawn
-        List<GameObject> possibleEnemies = new List<GameObject>();
-
-        //Gets the max enemy level allowed to spawn
-        int maxLevel = GameManager.roundManager.rounds[GameManager.roundManager.currentRound].maxSpawnLevel;
-
-        //Iterates through the enemy database
-        for (int i = 0; i < enemies.Length; i++)
-        {
-            //if the enemy is within the level range
-            if (enemies[i].spawnLevel <= maxLevel)
-            {
-                //Add it to the list of candidates
-                possibleEnemies.Add(enemies[i].prefab);
-            }
-        }
+        GameObject[] possibleEnemies = GameManager.levelInfo.rounds[GameManager.roundManager.currentRound].enemiesToSpawn;
 
         //Randomly select an enemy from the list of candidates
-        GameObject enemy = enemies[Random.Range(0, possibleEnemies.Count)].prefab;
+        GameObject enemy = enemies[Random.Range(0, possibleEnemies.Length)].prefab;
 
         //Return this enemy
         return enemy;
