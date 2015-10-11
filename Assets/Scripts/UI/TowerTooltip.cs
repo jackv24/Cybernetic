@@ -25,6 +25,7 @@ public class TowerTooltip : MonoBehaviour
     public Text infoText;
     private string infoTextString;
 
+    public Button upgradeButton;
     public Text upgradeText;
 
     //Stores the selected node
@@ -70,15 +71,26 @@ public class TowerTooltip : MonoBehaviour
                     );
 
                 upgradeText.text = string.Format("Upgrade ({0})", towerStats.levels[towerStats.currentLevel + 1].cost);
+
+                if (GameManager.resourceManager.resources < towerStats.levels[towerStats.currentLevel + 1].cost)
+                    upgradeButton.interactable = false;
+                else
+                    upgradeButton.interactable = true;
             }
             else
             {
                 infoText.text = "Fully Upgraded";
 
+                upgradeButton.interactable = false;
                 upgradeText.text = "Upgrade (X)";
             }
         }
         
+    }
+
+    public void SetSelected(TowerStats tower)
+    {
+        towerStats = tower;
     }
 
     //Clears the selected node

@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour
     public static PauseGame pauseGame;
     public bool isGamePaused = false;
 
+    public GameObject buildMenu;
+
     void Start()
     {
         //Set the instance for this game manager

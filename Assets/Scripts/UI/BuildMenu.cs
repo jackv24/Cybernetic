@@ -24,6 +24,8 @@ public class BuildMenu : MonoBehaviour
 
     void Start()
     {
+        GameManager.gameManager.buildMenu = this.gameObject;
+
         //Get the tower database from the game controller
         towerDatabase = GameManager.towerDatabase;
 

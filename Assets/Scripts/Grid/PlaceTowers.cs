@@ -91,7 +91,9 @@ public class PlaceTowers : MonoBehaviour
     void Place(GameObject towerPrefab, Node node)
     {
         //Instantiates the tower at the node position
-        GameObject tower = Instantiate(towerPrefab, node.transform.position + towerPrefab.transform.position, towerPrefab.transform.rotation) as GameObject;
+        GameObject tower = Instantiate(towerPrefab, 
+            node.transform.position, 
+            towerPrefab.transform.rotation) as GameObject;
 
         //Makes the tower a child of the node
         tower.transform.parent = node.transform;

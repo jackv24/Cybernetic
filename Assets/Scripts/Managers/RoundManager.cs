@@ -48,6 +48,8 @@ public class RoundManager : MonoBehaviour
             {
                 isDefendRound = false;
 
+                GameManager.gameManager.buildMenu.SetActive(true);
+
                 //Start the next round
                 StartNextRound();
             }
@@ -101,5 +103,7 @@ public class RoundManager : MonoBehaviour
 
         //Updates the current round bool value
         isDefendRound = true;
+
+        GameManager.gameManager.buildMenu.SetActive(false);
     }
 }

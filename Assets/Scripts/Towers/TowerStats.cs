@@ -14,6 +14,17 @@ public class TowerStats : MonoBehaviour
 
     public Tower[] levels;
 
+    [HideInInspector]
+    public TowerAppearance towerAppearance;
+
+    [HideInInspector]
+    public bool isSelected = false;
+
+    void Start()
+    {
+        towerAppearance = GetComponent<TowerAppearance>();
+    }
+
     public void Upgrade()
     {
         if (currentLevel + 1 < levels.Length && GameManager.resourceManager.resources >= levels[currentLevel + 1].cost)
@@ -27,7 +38,12 @@ public class TowerStats : MonoBehaviour
 
             if (levels[currentLevel].material)
             {
-                GetComponent<TowerAppearance>().ChangeMaterial(levels[currentLevel].material);
+                towerAppearance.ChangeMaterial(levels[currentLevel].material);
+            }
+
+            if (towerAppearance)
+            {
+                towerAppearance.ChangeRangeDisplay(levels[currentLevel].range);
             }
         }
     }

@@ -50,6 +50,9 @@ public class SelectTowers : MonoBehaviour
                 //If there is a tower occupying this node
                 if (selectedNode.occupyingTower && towerTooltip)
                 {
+                    if (selectedTower)
+                        selectedTower.GetComponent<TowerStats>().isSelected = false;
+
                     //Set the selected tower to the node's occupying tower
                     selectedTower = selectedNode.occupyingTower;
 
@@ -71,7 +74,9 @@ public class SelectTowers : MonoBehaviour
                     lastSelectedNode = selectedNode;
 
                     //Set selected tower for tower tooltip
-                    towerTooltip.towerStats = selectedTower.GetComponent<TowerStats>();
+                    towerTooltip.SetSelected(selectedTower.GetComponent<TowerStats>());
+
+                    selectedTower.GetComponent<TowerStats>().isSelected = true;
                 }
                 else //If there is no tower on this node
                 {
@@ -96,6 +101,9 @@ public class SelectTowers : MonoBehaviour
     //Removes the tooltip
     public void RemoveTooltip()
     {
+        if (selectedTower)
+            selectedTower.GetComponent<TowerStats>().isSelected = false;
+
         //Reset references
         selectedTower = null;
         //Deactivate it
