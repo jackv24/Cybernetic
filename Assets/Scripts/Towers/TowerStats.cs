@@ -6,6 +6,9 @@ public class TowerStats : MonoBehaviour
     //The name of the tower
     public string towerName = "";
 
+    //The icon to display in build menu and tooltip
+    public Sprite icon;
+
     //Current health
     public int currentHealth = 100;
 

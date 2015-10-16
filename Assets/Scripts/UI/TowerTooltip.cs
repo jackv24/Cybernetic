@@ -7,6 +7,9 @@ public class TowerTooltip : MonoBehaviour
     //The text to display the title of the tower
     public Text titleText;
 
+    //Image to display icon
+    public Image towerIcon;
+
     //Health bar slider
     public Slider healthBar;
     //Level bar slider
@@ -53,6 +56,10 @@ public class TowerTooltip : MonoBehaviour
         {
             //Update name text
             titleText.text = towerStats.towerName;
+
+            //sets tower icon
+            if (towerStats.icon)
+                towerIcon.sprite = towerStats.icon;
 
             //Update slider values
             healthBar.value = (float)towerStats.currentHealth / towerStats.levels[towerStats.currentLevel].maxHealth;

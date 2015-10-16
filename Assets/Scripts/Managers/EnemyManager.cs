@@ -4,9 +4,6 @@ using System.Collections.Generic;
 
 public class EnemyManager : MonoBehaviour
 {
-    //Database of enemies
-    public Enemy[] enemies;
-
     //A list of all enemies is the scene
     public List<GameObject> currentEnemies = new List<GameObject>();
 
@@ -39,20 +36,9 @@ public class EnemyManager : MonoBehaviour
         GameObject[] possibleEnemies = GameManager.levelInfo.rounds[GameManager.roundManager.currentRound].enemiesToSpawn;
 
         //Randomly select an enemy from the list of candidates
-        GameObject enemy = enemies[Random.Range(0, possibleEnemies.Length)].prefab;
+        GameObject enemy = possibleEnemies[Random.Range(0, possibleEnemies.Length)];
 
         //Return this enemy
         return enemy;
     }
-}
-
-//Class to hold enemy prefab information
-[System.Serializable]
-public class Enemy
-{
-    //The prefab to spawn
-    public GameObject prefab;
-
-    //What level is this enemy
-    public int spawnLevel = 0;
 }

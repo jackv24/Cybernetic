@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 public class BuildMenuItem : MonoBehaviour
 {
+    //The tower icon to show
+    public Image towerIcon;
+
     //Text to display tower info
     public Text infoText;
 
@@ -28,6 +31,12 @@ public class BuildMenuItem : MonoBehaviour
     {
         TowerStats towerStats = towerPrefab.GetComponent<TowerStats>();
 
+        //If a tower icon is assigned
+        if(towerStats.icon)
+            //Set the mage to that sprite
+            towerIcon.sprite = towerStats.icon;
+
+        //Set values from tower prefab
         towerName = towerStats.towerName;
         cost = towerStats.levels[towerStats.currentLevel].cost;
         health = towerStats.currentHealth;
