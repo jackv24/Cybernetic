@@ -59,6 +59,9 @@ public class RoundManager : MonoBehaviour
     //Starts the next round
     void StartNextRound()
     {
+        GameManager.gameManager.isFastForwarding = false;
+        Time.timeScale = 1f;
+
         currentRound++;
 
         //If there are rounds left

@@ -21,9 +21,13 @@ public class Laser : MonoBehaviour
         life += Time.deltaTime;
 
         //If the laser is still within its lifetime
-        if(life < lifeTime)
+        if (life < lifeTime)
+        {
             //Move forward with respect to speed and time
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        }
+        else
+            Destroy(gameObject);
     }
 
     void OnCollisionEnter(Collision col)

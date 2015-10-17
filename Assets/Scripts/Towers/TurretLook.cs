@@ -40,7 +40,7 @@ public class TurretLook : MonoBehaviour
             Vector3 direction = position - rotateTransform.position;
 
             //Rotate towards direction
-            rotateTransform.rotation = Quaternion.Lerp(rotateTransform.rotation, Quaternion.LookRotation(direction), rotateSpeed);
+            rotateTransform.rotation = Quaternion.Lerp(rotateTransform.rotation, Quaternion.LookRotation(direction), rotateSpeed * Time.timeScale);
 
             //Constrain to y axis
             rotateTransform.eulerAngles = new Vector3(0, rotateTransform.eulerAngles.y, 0);

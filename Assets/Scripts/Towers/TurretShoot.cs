@@ -32,7 +32,6 @@ public class TurretShoot : MonoBehaviour
 
     void Update()
     {
-        
         //If the time passed is more than the next fire time...
         if (Time.time > nextFireTime)
         {

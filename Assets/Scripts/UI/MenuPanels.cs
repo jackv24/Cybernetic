@@ -20,7 +20,6 @@ public class MenuPanels : MonoBehaviour
     public void OpenPanel(int index)
     {
         menuPanels[selected].SetActive(false);
-
         menuPanels[index].SetActive(true);
 
         selected = index;

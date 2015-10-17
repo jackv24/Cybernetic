@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject buildMenu;
 
+    public bool isFastForwarding = false;
+
     void Start()
     {
         //Set the instance for this game manager
@@ -58,6 +60,16 @@ public class GameManager : MonoBehaviour
         {
             // Toggle the paused game state
             PauseGame(!pauseGame.gameObject.activeSelf);
+        }
+
+        if (Input.GetButtonDown("Fast Forward") && !isGamePaused && roundManager.isDefendRound)
+        {
+            isFastForwarding = !isFastForwarding;
+
+            if (isFastForwarding)
+                Time.timeScale = 4f;
+            else
+                Time.timeScale = 1f;
         }
     }
 
