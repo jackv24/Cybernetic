@@ -1,18 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
 {
-    public AudioSource efxSource;
-    public AudioSource musicSource;
     public static SoundManager instance = null;
 
-    public float lowPitchRange = 0.95f;
-    public float highPitchRange = 1.05f;
+    // UI audio clips
+    public AudioClip hoverButton;
+    public AudioClip clickButton;
+
+    // The source to play audio clips through
+    private AudioSource audioSource;
 
     void Awake()
     {
+        //Ensures that there is only ever one SoundManager
         if (instance == null)
             instance = this;
         else if (instance != this)
@@ -21,19 +23,28 @@ public class SoundManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void PlaySound(AudioClip clip)
+    void Start()
     {
-        efxSource.clip = clip;
-        efxSource.Play();
+        //Sets the reference for the audio manager to the one attached to this gameobject
+        audioSource = GetComponent<AudioSource>();
     }
 
-    public void PlayRandomSound(params AudioClip[] clips)
+    // Called externally. Plays the sound given.
+    public void PlaySound(string sound)
     {
-        int randomIndex = Random.Range(0, clips.Length);
-        float randomPitch = Random.Range(lowPitchRange, highPitchRange);
+        AudioClip clip = null;
 
-        efxSource.pitch = randomPitch;
-        efxSource.clip = clips[randomIndex];
-        efxSource.Play();
+        switch (sound)
+        {
+            case "hover":
+                clip = hoverButton;
+                break;
+            case "click":
+                clip = clickButton;
+                break;
+        }
+
+        if(clip)
+            audioSource.PlayOneShot(clip);
     }
 }
