@@ -12,6 +12,8 @@ public class EnemyStats : MonoBehaviour
 
     public int resources = 2;
 
+    public GameObject deathEffect;
+
     void Start()
     {
         //Add self to enemies list

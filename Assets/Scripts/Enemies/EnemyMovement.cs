@@ -40,8 +40,12 @@ public class EnemyMovement : MonoBehaviour
 
                 //If the enemy has not yet reached the waypoint
                 if (transform.position != targetPos)
+                {
                     //Move towards the waypoint at speed with respect to time
                     transform.position = Vector3.MoveTowards(transform.position, targetPos, currentSpeed * Time.deltaTime);
+
+                    transform.LookAt(new Vector3(targetPos.x, transform.position.y, targetPos.z));
+                }
                 else //If the enemy has reached the waypoint
                     target++; //Set the target waypoint next
             }

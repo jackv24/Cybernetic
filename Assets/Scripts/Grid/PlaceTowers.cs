@@ -102,6 +102,8 @@ public class PlaceTowers : MonoBehaviour
 
         //Charge the cost of this tower
         GameManager.resourceManager.RemoveResources(towerPrefab.GetComponent<TowerStats>().levels[towerPrefab.GetComponent<TowerStats>().currentLevel].cost);
+
+        SoundManager.instance.PlaySound("click");
     }
 
     //Sets the tower prefab to instantiate

@@ -87,6 +87,9 @@ public class GameManager : MonoBehaviour
         {
             gameEndUI.GameLost();
         }
+
+        Time.timeScale = 0;
+        isGamePaused = true;
     }
 
     //Pauses the game
