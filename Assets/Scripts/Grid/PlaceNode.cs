@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Node : MonoBehaviour
+public class PlaceNode : MonoBehaviour
 {
     //Is the node available to place a tower on?
     public bool isAvailable = false;

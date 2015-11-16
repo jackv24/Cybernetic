@@ -13,8 +13,8 @@ public class SelectTowers : MonoBehaviour
     [HideInInspector] //The currently selected tower
     public GameObject selectedTower;
 
-    private Node lastSelectedNode;
-    private Node selectedNode;
+    private PlaceNode lastSelectedNode;
+    private PlaceNode selectedNode;
 
     //Reference to the placetowers script
     private PlaceTowers placeTowers;
@@ -45,7 +45,7 @@ public class SelectTowers : MonoBehaviour
             if (Physics.Raycast(ray, out hitInfo, placeTowers.maxDistance, placeTowers.layer))
             {
                 //Store the node hit
-                selectedNode = hitInfo.collider.GetComponent<Node>();
+                selectedNode = hitInfo.collider.GetComponent<PlaceNode>();
 
                 //If there is a tower occupying this node
                 if (selectedNode.occupyingTower && towerTooltip)

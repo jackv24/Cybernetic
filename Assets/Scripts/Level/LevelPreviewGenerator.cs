@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class LevelPreviewGenerator : MonoBehaviour
 {
     //prefabs for sprites to represent different nodes
     public GameObject blankSquare;
+    public GameObject pathSquare;
+    public GameObject buildSquare;
+    public GameObject baseSquare;
+    public GameObject spawnSquare;
 
     // A calculated value for the size of the squares
     private int squareSize = 0;
@@ -16,6 +21,8 @@ public class LevelPreviewGenerator : MonoBehaviour
     private RectTransform rectTransform;
     //map size gained from rect transform's width
     private int mapSize = 0;
+
+    private List<GameObject> nodeSquares;
 
     void Start()
     {
@@ -34,6 +41,8 @@ public class LevelPreviewGenerator : MonoBehaviour
         //Calculate the size of each square
         squareSize = mapSize / levelGenerator.levelSize;
 
+        nodeSquares = new List<GameObject>();
+
         //Perform initial update of grid (run after generating level)
         UpdateGrid();
     }
@@ -41,8 +50,13 @@ public class LevelPreviewGenerator : MonoBehaviour
     //Updates the displayed grid
     public void UpdateGrid()
     {
+        //Destroy all current squares and remove from list
+        foreach (GameObject node in nodeSquares)
+            Destroy(node);
+        nodeSquares.RemoveAll(delegate (GameObject o) { return o == null; });
+
         //Get array of nodes from level generator
-        GameObject[,] gridNodes = levelGenerator.gridNodes;
+        LevelNode[,] gridNodes = levelGenerator.gridNodes;
 
         //Iterate through the 2D array
         for (int x = 0; x < levelGenerator.levelSize; x++)
@@ -51,9 +65,25 @@ public class LevelPreviewGenerator : MonoBehaviour
             {
                 GameObject square = null;
 
-                //Determine what sqaure to instantaite based on the already generated grid
-                if (gridNodes[x, y] == null)
-                    square = blankSquare;
+                //Determine what square to instantiate based on the already generated grid
+                switch (gridNodes[x, y].nodeType)
+                {
+                    case LevelNode.Type.Blank:
+                        square = blankSquare;
+                        break;
+                    case LevelNode.Type.Path:
+                        square = pathSquare;
+                        break;
+                    case LevelNode.Type.Build:
+                        square = buildSquare;
+                        break;
+                    case LevelNode.Type.Base:
+                        square = baseSquare;
+                        break;
+                    case LevelNode.Type.Spawner:
+                        square = spawnSquare;
+                        break;
+                }
 
                 //Instantiate suare graphic
                 GameObject obj = Instantiate(square);
@@ -66,6 +96,9 @@ public class LevelPreviewGenerator : MonoBehaviour
 
                 //Set name based on index (for organisation)
                 obj.name = string.Format("Node ({0}, {1})", x, y);
+
+                //Add square to list for destruction on regenerate
+                nodeSquares.Add(obj);
             }
         }
     }

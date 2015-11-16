@@ -76,7 +76,7 @@ public class GenerateGrid : MonoBehaviour
                     //If the ray did not collide with a path
                     if (hitInfo.collider.tag != pathTag)
                     {
-                        Node n = node.GetComponent<Node>();
+                        PlaceNode n = node.GetComponent<PlaceNode>();
 
                         //Make this node a build node
                         n.canPlace = true;

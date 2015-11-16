@@ -32,7 +32,7 @@ public class TowerTooltip : MonoBehaviour
     public Text upgradeText;
 
     //Stores the selected node
-    public Node selectedNode;
+    public PlaceNode selectedNode;
 
     //Currently selected tower
     public TowerStats towerStats;

@@ -15,7 +15,7 @@ public class PlaceTowers : MonoBehaviour
     private Camera cam;
 
     //The last node wich was selected
-    private Node lastNode;
+    private PlaceNode lastNode;
 
     public bool canPlace = true;
 
@@ -40,7 +40,7 @@ public class PlaceTowers : MonoBehaviour
             if (Physics.Raycast(ray, out hitInfo, maxDistance, layer))
             {
                 //Store the node hit
-                Node node = hitInfo.collider.GetComponent<Node>();
+                PlaceNode node = hitInfo.collider.GetComponent<PlaceNode>();
 
                 //Set node state
                 HoverNode(node);
@@ -70,7 +70,7 @@ public class PlaceTowers : MonoBehaviour
     }
 
     //Sets node states
-    void HoverNode(Node node)
+    void HoverNode(PlaceNode node)
     {
         //If a new node is selected
         if (node != lastNode)
@@ -88,7 +88,7 @@ public class PlaceTowers : MonoBehaviour
     }
 
     //Places a tower
-    void Place(GameObject towerPrefab, Node node)
+    void Place(GameObject towerPrefab, PlaceNode node)
     {
         //Instantiates the tower at the node position
         GameObject tower = Instantiate(towerPrefab, 
