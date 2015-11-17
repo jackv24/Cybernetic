@@ -10,13 +10,15 @@ public class LevelGenerator : MonoBehaviour
     //Nodes from which more nodes can be generated
     private List<LevelNode> activeNodes;
 
+    private List<LevelNode> pathNodes;
+
     //The horizontal and vertical size of the (assumedly square) level
     public int levelSize = 16;
 
     //Amount of paths nodes to begin generation
     private int initialPaths = 1;
-
     private float turnProb = 0.5f;
+    private float buildFill = 0.8f;
 
     void Start()
     {
@@ -24,6 +26,7 @@ public class LevelGenerator : MonoBehaviour
         gridNodes = new LevelNode[levelSize, levelSize];
 
         activeNodes = new List<LevelNode>();
+        pathNodes = new List<LevelNode>();
 
         //Generate level
         Regenerate();
@@ -34,6 +37,7 @@ public class LevelGenerator : MonoBehaviour
     {
         initialPaths = (int)PlayerPrefs.GetFloat("initialPaths", 1);
         turnProb = PlayerPrefs.GetFloat("turnProb", 0.5f);
+        buildFill = PlayerPrefs.GetFloat("buildFill", 0.8f);
     }
 
     public void Regenerate()
@@ -48,26 +52,30 @@ public class LevelGenerator : MonoBehaviour
         //Start generating level
         Initialise();
         GeneratePaths();
+        GenerateBuildAreas();
     }
 
     void Initialise()
     {
+        activeNodes.Clear();
+        pathNodes.Clear();
+
         //Arbitrarily chosen to have a buffer of one quarter of map size
-        int quarterSize = levelSize / 4;
+        int bufferSize = levelSize / 3;
 
         //Choose a random position on the map
         int x = Random.Range(0, levelSize + 1);
         int y = Random.Range(0, levelSize + 1);
 
         //Ensure this position is within the bounds of the buffer
-        if (x > quarterSize)
-            x -= quarterSize;
-        if (x < quarterSize)
-            x += quarterSize;
-        if (y > quarterSize)
-            y -= quarterSize;
-        if (y < quarterSize)
-            y += quarterSize;
+        if (x > bufferSize)
+            x -= bufferSize;
+        if (x < bufferSize)
+            x += bufferSize;
+        if (y > bufferSize)
+            y -= bufferSize;
+        if (y < bufferSize)
+            y += bufferSize;
 
         //place the base at this random position
         gridNodes[x, y].nodeType = LevelNode.Type.Base;
@@ -102,6 +110,8 @@ public class LevelGenerator : MonoBehaviour
 
             //Add path to list of active nodes
             activeNodes.Add(gridNodes[posX, posY]);
+
+            pathNodes.Add(gridNodes[posX, posY]);
         }
     }
 
@@ -142,13 +152,15 @@ public class LevelGenerator : MonoBehaviour
                     //if this new node is not within map bounds, end path
                     if (CheckIsWithinMapBounds(posX, posY) == false)
                         down = right = up = left = false;
-                    //otherwise, if the node i clear, make it a path
-                    else if (CheckNodeIsClear(posX, posY))
+                    //otherwise, if the node is clear, make it a path
+                    else if (CheckNodeIsType(posX, posY, LevelNode.Type.Blank))
                     {
                         done = true;
 
                         //Add to current nodes to continue paths later
                         currentNodes.Add(gridNodes[posX, posY]);
+
+                        pathNodes.Add(gridNodes[posX, posY]);
 
                         //Set as path
                         gridNodes[posX, posY].nodeType = LevelNode.Type.Path;
@@ -199,6 +211,7 @@ public class LevelGenerator : MonoBehaviour
                         done = true;
 
                         node.nodeType = LevelNode.Type.Spawner;
+                        pathNodes.Remove(node);
                     }
                 }
             }
@@ -213,6 +226,50 @@ public class LevelGenerator : MonoBehaviour
             //If there are no more active nodes, stop running generator
             if (activeNodes.Count == 0)
                 running = false;
+        }
+    }
+
+    void GenerateBuildAreas()
+    {
+        foreach (LevelNode node in pathNodes)
+        {
+            bool done = false;
+
+            bool down = true, right = true, up = true, left = true;
+
+            while (!done)
+            {
+                Vector2 direction = GetRandomDirection(down, right, up, left);
+
+                //New node positions
+                int posX = node.x + (int)direction.x;
+                int posY = node.y + (int)direction.y;
+
+                //if this new node is not within map bounds, ignore it
+                if (CheckIsWithinMapBounds(posX, posY) == false)
+                    down = right = up = left = false;
+                //otherwise, if the node is clear, make it a build area
+                else if (CheckNodeIsType(posX, posY, LevelNode.Type.Blank))
+                {
+                    if (Random.Range(0, 100) < buildFill * 100)
+                        gridNodes[posX, posY].nodeType = LevelNode.Type.Build;
+                }
+
+                //Make sure this direction is not chosen again
+                if (direction == new Vector2(0, -1))
+                    down = false;
+                if (direction == new Vector2(1, 0))
+                    right = false;
+                if (direction == new Vector2(0, 1))
+                    up = false;
+                if (direction == new Vector2(-1, 0))
+                    left = false;
+
+                if (!down && !right && !up && !left)
+                {
+                    done = true;
+                }
+            }
         }
     }
 
@@ -271,11 +328,11 @@ public class LevelGenerator : MonoBehaviour
     }
 
     //Checks if the node is clear
-    bool CheckNodeIsClear(int xIndex, int yIndex)
+    bool CheckNodeIsType(int xIndex, int yIndex, LevelNode.Type type)
     {
         if (CheckIsWithinMapBounds(xIndex, yIndex))
         {
-            if (gridNodes[xIndex, yIndex].nodeType == LevelNode.Type.Blank)
+            if (gridNodes[xIndex, yIndex].nodeType == type)
             {
                 return true;
             }
