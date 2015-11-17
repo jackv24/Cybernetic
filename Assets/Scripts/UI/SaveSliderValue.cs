@@ -12,6 +12,8 @@ public class SaveSliderValue : MonoBehaviour
     {
         slider = GetComponent<Slider>();
 
+        slider.value = PlayerPrefs.GetFloat(valueName, slider.value);
+
         //When the value of this slider changes...
         slider.onValueChanged.AddListener(delegate { ValueChangedUpdate(); });
         ValueChangedUpdate();
@@ -20,6 +22,6 @@ public class SaveSliderValue : MonoBehaviour
     public void ValueChangedUpdate()
     {
         //...save the value in playerprefs
-        PlayerPrefs.SetInt(valueName, (int)slider.value);
+        PlayerPrefs.SetFloat(valueName, slider.value);
     }
 }

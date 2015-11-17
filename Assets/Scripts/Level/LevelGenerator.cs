@@ -14,7 +14,9 @@ public class LevelGenerator : MonoBehaviour
     public int levelSize = 16;
 
     //Amount of paths nodes to begin generation
-    private int initialPaths = 3;
+    private int initialPaths = 1;
+
+    private float turnProb = 0.5f;
 
     void Start()
     {
@@ -30,7 +32,8 @@ public class LevelGenerator : MonoBehaviour
     //Loads preferences set by GUI
     void LoadPrefs()
     {
-        initialPaths = PlayerPrefs.GetInt("initialPaths", 1);
+        initialPaths = (int)PlayerPrefs.GetFloat("initialPaths", 1);
+        turnProb = PlayerPrefs.GetFloat("turnProb", 0.5f);
     }
 
     public void Regenerate()
@@ -76,10 +79,16 @@ public class LevelGenerator : MonoBehaviour
         for (int i = 0; i < initialPaths; i++)
         {
             Vector2 direction = GetRandomDirection(down, right, up, left);
-            int dirX = (int)direction.x, dirY = (int)direction.y;
+            int posX = x + (int)direction.x;
+            int posY = y + (int)direction.y;
 
             //Set node as path
-            gridNodes[x + dirX, y + dirY].nodeType = LevelNode.Type.Path;
+            gridNodes[posX, posY].nodeType = LevelNode.Type.Path;
+
+            gridNodes[posX, posY].direction = direction;
+
+            if (direction.x != 0)
+                gridNodes[posX, posY].subtype = "horizontal";
 
             //Make sure this direction is not chosen again
             if (direction == new Vector2(0, -1))
@@ -92,15 +101,118 @@ public class LevelGenerator : MonoBehaviour
                 left = false;
 
             //Add path to list of active nodes
-            activeNodes.Add(gridNodes[x + dirX, y + dirY]);
+            activeNodes.Add(gridNodes[posX, posY]);
         }
     }
 
     void GeneratePaths()
     {
-        foreach (LevelNode node in activeNodes)
+        bool running = true;
+
+        //Nodes which have just been spawned
+        List<LevelNode> currentNodes = new List<LevelNode>();
+
+        //Loops until all paths have ended
+        while (running)
         {
-            
+            //Every active node (at the end of a path) attempts to spawn another node
+            foreach (LevelNode node in activeNodes)
+            {
+                bool done = false;
+
+                //Booleans for available directions
+                bool up = true, down = true, left = true, right = true;
+
+                //Loops until blank node is found, or no blank node is found (path ends)
+                while (!done)
+                {
+                    //Unit vector for direction
+                    Vector2 direction;
+
+                    //Turn probability determines whether a random direction is chosen or if it continues in a straight line
+                    if (Random.Range(0, 100) < turnProb * 100)
+                        direction = GetRandomDirection(down, right, up, left);
+                    else
+                        direction = node.direction;
+
+                    //New node positions
+                    int posX = node.x + (int)direction.x;
+                    int posY = node.y + (int)direction.y;
+
+                    //if this new node is not within map bounds, end path
+                    if (CheckIsWithinMapBounds(posX, posY) == false)
+                        down = right = up = left = false;
+                    //otherwise, if the node i clear, make it a path
+                    else if (CheckNodeIsClear(posX, posY))
+                    {
+                        done = true;
+
+                        //Add to current nodes to continue paths later
+                        currentNodes.Add(gridNodes[posX, posY]);
+
+                        //Set as path
+                        gridNodes[posX, posY].nodeType = LevelNode.Type.Path;
+                        //Remember direction from last node (for straight paths)
+                        gridNodes[posX, posY].direction = direction;
+
+                        //Determine what path orientation to display
+                        if (direction.x != 0)
+                            gridNodes[posX, posY].subtype = "horizontal";
+
+                        if (gridNodes[posX, posY].direction != node.direction)
+                        {
+                            //Check all possible corner directions
+                            if (node.direction == new Vector2(1, 0) && gridNodes[posX, posY].direction == new Vector2(0, 1))
+                                node.subtype = "bottomright"; //Set previous node to face into this one
+                            else if (node.direction == new Vector2(-1, 0) && gridNodes[posX, posY].direction == new Vector2(0, 1))
+                                node.subtype = "bottomleft";
+                            else if (node.direction == new Vector2(0, 1) && gridNodes[posX, posY].direction == new Vector2(1, 0))
+                                node.subtype = "topleft";
+                            else if (node.direction == new Vector2(0, -1) && gridNodes[posX, posY].direction == new Vector2(1, 0))
+                                node.subtype = "bottomleft";
+
+                            else if (node.direction == new Vector2(1, 0) && gridNodes[posX, posY].direction == new Vector2(0, -1))
+                                node.subtype = "topright";
+                            else if (node.direction == new Vector2(-1, 0) && gridNodes[posX, posY].direction == new Vector2(0, -1))
+                                node.subtype = "topleft";
+                            else if (node.direction == new Vector2(0, 1) && gridNodes[posX, posY].direction == new Vector2(-1, 0))
+                                node.subtype = "topright";
+                            else if (node.direction == new Vector2(0, -1) && gridNodes[posX, posY].direction == new Vector2(-1, 0))
+                                node.subtype = "bottomright";
+
+                        }
+                    }
+
+                    //Make sure this direction is not chosen again
+                    if (direction == new Vector2(0, -1))
+                        down = false;
+                    if (direction == new Vector2(1, 0))
+                        right = false;
+                    if (direction == new Vector2(0, 1))
+                        up = false;
+                    if (direction == new Vector2(-1, 0))
+                        left = false;
+
+                    //If there are no available spaces, end the path with a spawner
+                    if (!down && !right && !up && !left)
+                    {
+                        done = true;
+
+                        node.nodeType = LevelNode.Type.Spawner;
+                    }
+                }
+            }
+
+            //All active nodes have attempted to spawn more paths, so clear the list
+            activeNodes.Clear();
+            //Fill active nodes list with those paths spawned in the last run
+            activeNodes = new List<LevelNode>(currentNodes);
+            //Clear current nodes
+            currentNodes.Clear();
+
+            //If there are no more active nodes, stop running generator
+            if (activeNodes.Count == 0)
+                running = false;
         }
     }
 
@@ -145,5 +257,30 @@ public class LevelGenerator : MonoBehaviour
         
 
         return direction;
+    }
+
+    //Checks if node is within map bounds
+    bool CheckIsWithinMapBounds(int xIndex, int yIndex)
+    {
+        if (xIndex >= 0 && xIndex < levelSize & yIndex >= 0 && yIndex < levelSize)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    //Checks if the node is clear
+    bool CheckNodeIsClear(int xIndex, int yIndex)
+    {
+        if (CheckIsWithinMapBounds(xIndex, yIndex))
+        {
+            if (gridNodes[xIndex, yIndex].nodeType == LevelNode.Type.Blank)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

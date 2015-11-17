@@ -6,10 +6,16 @@ public class LevelPreviewGenerator : MonoBehaviour
 {
     //prefabs for sprites to represent different nodes
     public GameObject blankSquare;
-    public GameObject pathSquare;
     public GameObject buildSquare;
     public GameObject baseSquare;
     public GameObject spawnSquare;
+
+    public GameObject pathSquareVertical;
+    public GameObject pathSquareHorizontal;
+    public GameObject pathSquareTopLeft;
+    public GameObject pathSquareTopRight;
+    public GameObject pathSquareBottomLeft;
+    public GameObject pathSquareBottomRight;
 
     // A calculated value for the size of the squares
     private int squareSize = 0;
@@ -72,7 +78,18 @@ public class LevelPreviewGenerator : MonoBehaviour
                         square = blankSquare;
                         break;
                     case LevelNode.Type.Path:
-                        square = pathSquare;
+                        if (gridNodes[x, y].subtype == "vertical")
+                            square = pathSquareVertical;
+                        else if (gridNodes[x, y].subtype == "horizontal")
+                            square = pathSquareHorizontal;
+                        else if (gridNodes[x, y].subtype == "topleft")
+                            square = pathSquareTopLeft;
+                        else if (gridNodes[x, y].subtype == "topright")
+                            square = pathSquareTopRight;
+                        else if (gridNodes[x, y].subtype == "bottomleft")
+                            square = pathSquareBottomLeft;
+                        else if (gridNodes[x, y].subtype == "bottomright")
+                            square = pathSquareBottomRight;
                         break;
                     case LevelNode.Type.Build:
                         square = buildSquare;
