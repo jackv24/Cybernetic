@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class LevelGenerator : MonoBehaviour
 {
+    public static LevelGenerator instance = null;
+
     // A 2D array of the nodes in the level
     public LevelNode[,] gridNodes;
 
@@ -20,6 +22,17 @@ public class LevelGenerator : MonoBehaviour
     private float turnProb = 0.5f;
     private float buildFill = 0.8f;
 
+    void Awake()
+    {
+        //Ensures that there is only ever one SoundManager
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+
+        DontDestroyOnLoad(gameObject);
+    }
+
     void Start()
     {
         //Initialise the array
@@ -28,8 +41,7 @@ public class LevelGenerator : MonoBehaviour
         activeNodes = new List<LevelNode>();
         pathNodes = new List<LevelNode>();
 
-        //Generate level
-        Regenerate();
+        Generate();
     }
 
     //Loads preferences set by GUI
@@ -40,7 +52,7 @@ public class LevelGenerator : MonoBehaviour
         buildFill = PlayerPrefs.GetFloat("buildFill", 0.8f);
     }
 
-    public void Regenerate()
+    public void Generate()
     {
         LoadPrefs();
 

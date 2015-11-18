@@ -33,6 +33,7 @@ public class RoundManager : MonoBehaviour
         if (startGame && GameManager.startGame)
         {
             startGame = false;
+            Camera.main.GetComponent<CameraControl>().canControl = true;
 
             //Starts the first round
             StartNextRound();

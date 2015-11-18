@@ -40,7 +40,7 @@ public class LevelPreviewGenerator : MonoBehaviour
             Debug.LogWarning("Level Preview height and width are not equal!");
 
         //Get a reference to the level generator on this gameobject
-        levelGenerator = GetComponent<LevelGenerator>();
+        levelGenerator = LevelGenerator.instance;
 
         //Get map size from rect's width (arbitrary - height would work too)
         mapSize = (int)rectTransform.sizeDelta.x;
@@ -56,6 +56,8 @@ public class LevelPreviewGenerator : MonoBehaviour
     //Updates the displayed grid
     public void UpdateGrid()
     {
+        levelGenerator.Generate();
+
         //Destroy all current squares and remove from list
         foreach (GameObject node in nodeSquares)
             Destroy(node);

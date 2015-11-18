@@ -19,6 +19,7 @@ public class LevelNode
 
     public Vector2 direction = Vector2.zero;
 
+    //used for determining what graphic to display
     public string subtype = "vertical";
 
     //Constructor

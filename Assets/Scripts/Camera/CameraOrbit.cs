@@ -13,6 +13,7 @@ public class CameraOrbit : MonoBehaviour
     void Start()
     {
         cam = GetComponent<CameraControl>();
+        cam.canControl = false;
     }
 
     void Update()

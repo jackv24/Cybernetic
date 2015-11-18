@@ -31,6 +31,8 @@ public class CameraControl : MonoBehaviour
     //The camera target
     public Transform target;
 
+    public bool canControl = true;
+
     void Start()
     {
         //If there is no target, create one.
@@ -50,7 +52,7 @@ public class CameraControl : MonoBehaviour
     void LateUpdate()
     {
         //If the game hasn't started, dont execute the rest of the code
-        if (GameManager.startGame)
+        if (canControl)
         {
             if (Input.GetButton("Move Camera"))
             {
