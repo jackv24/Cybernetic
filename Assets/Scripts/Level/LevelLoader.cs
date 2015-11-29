@@ -68,6 +68,8 @@ public class LevelLoader : MonoBehaviour
                 {
                     GameObject spawn = Instantiate(spawner, new Vector3(x, 0, y) + spawner.transform.position, Quaternion.identity) as GameObject;
                     spawn.transform.parent = level.transform;
+
+                    spawn.GetComponent<Spawner>().nextNode = levelNodes[x, y].nextNode;
                 }
             }
         }

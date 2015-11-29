@@ -70,7 +70,7 @@ public class BuildMenu : MonoBehaviour
 
             lastSelectedMenuItem = item;
 
-            GameObject.Find("Grid").GetComponent<PlaceTowers>().SetCurrentTower(item.towerPrefab);
+            GameObject.Find("Towers").GetComponent<PlaceTowers>().SetCurrentTower(item.towerPrefab);
         }
     }
 }

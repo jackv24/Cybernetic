@@ -96,7 +96,7 @@ public class PlaceTowers : MonoBehaviour
             towerPrefab.transform.rotation) as GameObject;
 
         //Makes the tower a child of the node
-        tower.transform.parent = node.transform;
+        tower.transform.parent = transform;
         //Sets the nodes occupying tower to this tower
         node.occupyingTower = tower;
 

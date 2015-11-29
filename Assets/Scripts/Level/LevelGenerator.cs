@@ -110,6 +110,8 @@ public class LevelGenerator : MonoBehaviour
             if (direction.x != 0)
                 gridNodes[posX, posY].subtype = "horizontal";
 
+            gridNodes[posX, posY].nextNode = gridNodes[x, y];
+
             //Make sure this direction is not chosen again
             if (direction == new Vector2(0, -1))
                 down = false;
@@ -178,6 +180,8 @@ public class LevelGenerator : MonoBehaviour
                         gridNodes[posX, posY].nodeType = LevelNode.Type.Path;
                         //Remember direction from last node (for straight paths)
                         gridNodes[posX, posY].direction = direction;
+
+                        gridNodes[posX, posY].nextNode = node;
 
                         //Determine what path orientation to display
                         if (direction.x != 0)

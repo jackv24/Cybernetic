@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Spawner : MonoBehaviour
 {
+    public LevelNode nextNode = null;
+
     //The enemy prefab to spawn
     private GameObject enemyPrefab;
 
@@ -15,7 +17,7 @@ public class Spawner : MonoBehaviour
     void Start()
     {
         //Sets a static reference to this script in the game manager
-        GameManager.spawner = this;
+        GameManager.spawners.Add(this);
     }
 
     //Sets initial values and starts spawning
@@ -58,5 +60,7 @@ public class Spawner : MonoBehaviour
         
         //Sets the enemy name
         obj.name = enemyPrefab.name;
+
+        obj.GetComponent<EnemyMovement>().nextNode = nextNode;
     }
 }

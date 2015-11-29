@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,9 +11,6 @@ public class GameManager : MonoBehaviour
     public static ResourceManager resourceManager;
     public static TowerDatabase towerDatabase;
     public static EnemyManager enemyManager;
-
-    //Static instance of the waypoint manager (attached to the level)
-    public static WaypointManager waypointManager;
 
     //Tower selection static references
     public static SelectTowers selectTowers;
@@ -30,7 +28,7 @@ public class GameManager : MonoBehaviour
     public static float enemySpeed = 1f;
 
     public static BaseHealth baseHealth;
-    public static Spawner spawner;
+    public static List<Spawner> spawners;
 
     public static PauseGame pauseGame;
     public bool isGamePaused = false;
@@ -41,6 +39,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        spawners = new List<Spawner>();
+
         //Set the instance for this game manager
         gameManager = this;
 

@@ -27,7 +27,14 @@ public class EnemyManager : MonoBehaviour
     {
         enemiesInRound = enemyAmount;
 
-        GameManager.spawner.StartSpawn(enemyAmount, spawnInterval);
+        int enemiesPerSpawner = enemyAmount / GameManager.spawners.Count;
+
+        enemiesInRound = enemiesPerSpawner * GameManager.spawners.Count;
+
+        foreach (Spawner spawner in GameManager.spawners)
+        {
+            spawner.StartSpawn(enemiesPerSpawner, spawnInterval);
+        }
     }
 
     //Returns an enemy prefab

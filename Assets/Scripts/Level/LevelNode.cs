@@ -22,6 +22,8 @@ public class LevelNode
     //used for determining what graphic to display
     public string subtype = "vertical";
 
+    public LevelNode nextNode = null;
+
     //Constructor
     public LevelNode(int xIndex, int yIndex, Type type)
     {

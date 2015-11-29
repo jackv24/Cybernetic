@@ -4,8 +4,6 @@ using UnityEngine.UI;
 
 public class LevelInfoDisplay : MonoBehaviour
 {
-    public Text titleText;
-
     //Displays the basic level info (number of rounds)
     public Text info;
 
@@ -19,8 +17,6 @@ public class LevelInfoDisplay : MonoBehaviour
         //If there is level information to load
         if (GameManager.levelInfo)
         {
-            titleText.text = string.Format(titleText.text, GameManager.levelInfo.world, GameManager.levelInfo.subtitle, GameManager.levelInfo.level);
-
             //Set the number of rounds
             info.text = "Rounds: " + GameManager.levelInfo.rounds.Length;
 
