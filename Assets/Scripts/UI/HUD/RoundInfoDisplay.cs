@@ -15,7 +15,7 @@ public class RoundInfoDisplay : MonoBehaviour
 
     void Update()
     {
-        string roundText = GameManager.roundManager.currentRound + 1 + "/" + GameManager.roundManager.rounds.Length;
+        string roundText = GameManager.roundManager.currentRound + 1 + "/" + GameManager.roundManager.rounds.Count;
 
         //If this is a defend round
         if (GameManager.roundManager.isDefendRound)

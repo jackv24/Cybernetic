@@ -1,24 +1,41 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class LevelInfo : MonoBehaviour
 {
-    public int world = 1;
-    public string subtitle = "The Basics";
-
-    public int level = 1;
-
     //An array of rounds in the level
-    public Round[] rounds;
+    public List<Round> rounds;
 
-    //Level difficulty (from 1-5)
-    [Range(1, 5)]
-    public int difficulty = 1;
+    private int roundCount = 0;
+
+    private float enemySpawnRate = 0;
 
     void Start()
     {
+        rounds = new List<Round>();
+
+        roundCount = int.Parse(PlayerPrefs.GetString("roundCount", "10"));
+
+        enemySpawnRate = PlayerPrefs.GetFloat("enemySpawnRate", 1f);
+
         //Set reference to this script in the game manager
         GameManager.levelInfo = this;
+
+        GenerateRounds();
+    }
+
+    void GenerateRounds()
+    {
+        for (int i = 0; i < roundCount; i++)
+        {
+            Round round = new Round();
+
+            round.enemies = Mathf.RoundToInt(6 * Mathf.Sqrt(i + 2 * i + 1));
+            round.spawnRate = enemySpawnRate * Mathf.Sqrt(i + 0.5f);
+
+            rounds.Add(round);
+        }
     }
 }
 
@@ -32,5 +49,5 @@ public class Round
     //How fast enemies spawn this round
     public float spawnRate = 1f;
 
-    public GameObject[] enemiesToSpawn;
+    public int enemySpawnLevel = 1;
 }

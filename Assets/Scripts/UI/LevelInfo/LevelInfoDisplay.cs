@@ -18,7 +18,7 @@ public class LevelInfoDisplay : MonoBehaviour
         if (GameManager.levelInfo)
         {
             //Set the number of rounds
-            info.text = "Rounds: " + GameManager.levelInfo.rounds.Length;
+            info.text = "Rounds: " + GameManager.levelInfo.rounds.Count;
 
             //Set the initial column text, ending with a newline
             rounds.text = "Round\n";
@@ -26,14 +26,14 @@ public class LevelInfoDisplay : MonoBehaviour
             spawnRate.text = "Speed\n";
 
             //Iterate through all round array items
-            for (int i = 0; i < GameManager.levelInfo.rounds.Length; i++)
+            for (int i = 0; i < GameManager.levelInfo.rounds.Count; i++)
             {
                 //Display current round
                 rounds.text += i + 1 + "\n";
                 //Display amount of enemies for that round
                 enemies.text += GameManager.levelInfo.rounds[i].enemies + "\n";
                 //Display the speed multipler of those enemies
-                spawnRate.text += "x" + GameManager.levelInfo.rounds[i].spawnRate + "\n";
+                spawnRate.text += string.Format("x{0:0.0}\n", GameManager.levelInfo.rounds[i].spawnRate);
             }
         }
     }

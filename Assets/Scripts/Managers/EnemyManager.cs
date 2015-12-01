@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class EnemyManager : MonoBehaviour
 {
+    public GameObject[] enemies;
+
     //A list of all enemies is the scene
     public List<GameObject> currentEnemies = new List<GameObject>();
 
@@ -40,10 +42,10 @@ public class EnemyManager : MonoBehaviour
     //Returns an enemy prefab
     public GameObject GetEnemyToSpawn()
     {
-        GameObject[] possibleEnemies = GameManager.levelInfo.rounds[GameManager.roundManager.currentRound].enemiesToSpawn;
+        int highestEnemyLevel = GameManager.levelInfo.rounds[GameManager.roundManager.currentRound].enemySpawnLevel;
 
         //Randomly select an enemy from the list of candidates
-        GameObject enemy = possibleEnemies[Random.Range(0, possibleEnemies.Length)];
+        GameObject enemy = enemies[Random.Range(0, highestEnemyLevel)];
 
         //Return this enemy
         return enemy;

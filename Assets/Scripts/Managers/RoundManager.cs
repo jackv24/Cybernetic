@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class RoundManager : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class RoundManager : MonoBehaviour
     public int enemies = 0;
 
     //An array of rounds in the level
-    public Round[] rounds;
+    public List<Round> rounds;
     //The current round
     public int currentRound = -1;
 
@@ -66,7 +67,7 @@ public class RoundManager : MonoBehaviour
         currentRound++;
 
         //If there are rounds left
-        if (currentRound < rounds.Length)
+        if (currentRound < rounds.Count)
         {
             StartCoroutine("BuildRoundTimer");
         }

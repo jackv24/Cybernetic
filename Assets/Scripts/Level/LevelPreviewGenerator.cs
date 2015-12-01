@@ -113,6 +113,8 @@ public class LevelPreviewGenerator : MonoBehaviour
                 Vector3 pos = new Vector3(x * squareSize, y * squareSize, 0);
                 obj.GetComponent<RectTransform>().localPosition = pos;
 
+                obj.GetComponent<RectTransform>().sizeDelta = new Vector2(squareSize, squareSize);
+
                 //Set name based on index (for organisation)
                 obj.name = string.Format("Node ({0}, {1})", x, y);
 
