@@ -31,7 +31,10 @@ public class LevelInfoDisplay : MonoBehaviour
                 //Display current round
                 rounds.text += i + 1 + "\n";
                 //Display amount of enemies for that round
-                enemies.text += GameManager.levelInfo.rounds[i].enemies + "\n";
+                enemies.text += string.Format("{0} <size={2}>({1})</size>\n",
+                    GameManager.levelInfo.rounds[i].enemies,
+                    GameManager.levelInfo.rounds[i].enemySpawnLevel,
+                    enemies.fontSize / 1.5);
                 //Display the speed multipler of those enemies
                 spawnRate.text += string.Format("x{0:0.0}\n", GameManager.levelInfo.rounds[i].spawnRate);
             }

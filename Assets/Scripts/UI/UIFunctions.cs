@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 //A class dedicated to basic UI functions to be controlled through the Unity 4.6 UI system
 public class UIFunctions : MonoBehaviour
 {
-    private int selectedWorld = 0;
-    private int selectedLevel = 0;
-
     public void ExitGame()
     {
         Application.Quit();
@@ -15,13 +13,13 @@ public class UIFunctions : MonoBehaviour
     //Load scene with id
     public void LoadScene(int id)
     {
-        Application.LoadLevel(id);
+        SceneManager.LoadScene(id);
     }
 
     //Load scene with name
     public void LoadScene(string name)
     {
-        Application.LoadLevel(name);
+        SceneManager.LoadScene(name);
     }
 
     // Reloads the current loaded level
@@ -31,35 +29,13 @@ public class UIFunctions : MonoBehaviour
         if (GameManager.gameManager.isGamePaused)
             GameManager.gameManager.PauseGame(false);
 
-        Application.LoadLevel(Application.loadedLevel);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     // Pauses the game
     public void PauseGame(bool state)
     {
         GameManager.gameManager.PauseGame(state);
-    }
-
-    //Sets currently selected world
-    public void SetWorld(int number)
-    {
-        selectedWorld = number;
-    }
-
-    //Sets the currently selected level
-    public void SetLevel(int number)
-    {
-        selectedLevel = number;
-    }
-    
-    //Loads the selected level with a template string name
-    public void LoadSelectedLevel()
-    {
-        //The template for scene name
-        string levelStringTemplate = "W{0}_Level{1}";
-
-        //Load level template with substituded world and level
-        Application.LoadLevel(string.Format(levelStringTemplate, selectedWorld, selectedLevel));
     }
 
     //Sets game as started in game manager

@@ -226,8 +226,9 @@ public class LevelGenerator : MonoBehaviour
                     {
                         done = true;
 
-                        node.nodeType = LevelNode.Type.Spawner;
                         pathNodes.Remove(node);
+
+                        node.nodeType = LevelNode.Type.Spawner;
                     }
                 }
             }

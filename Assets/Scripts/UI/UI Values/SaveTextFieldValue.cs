@@ -15,7 +15,7 @@ public class SaveTextFieldValue : MonoBehaviour
         field.text = PlayerPrefs.GetString(valueName, field.text);
 
         //When the value of this text field changes...
-        field.onValueChange.AddListener(delegate { ValueChangedUpdate(); });
+        field.onValueChanged.AddListener(delegate { ValueChangedUpdate(); });
         ValueChangedUpdate();
     }
 
