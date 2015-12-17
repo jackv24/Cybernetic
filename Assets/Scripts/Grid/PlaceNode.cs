@@ -92,11 +92,7 @@ public class PlaceNode : MonoBehaviour
         //If this is a placeable node
         if (canPlace)
         {
-            //Delete all children of the node (tower)
-            foreach (Transform tower in transform)
-            {
-                Destroy(tower.gameObject);
-            }
+            Destroy(occupyingTower);
 
             //Set the occupying tower to null
             occupyingTower = null;

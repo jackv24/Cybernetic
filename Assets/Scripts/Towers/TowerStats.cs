@@ -26,6 +26,8 @@ public class TowerStats : MonoBehaviour
     void Start()
     {
         towerAppearance = GetComponent<TowerAppearance>();
+
+        towerAppearance.ChangeRangeDisplay(levels[currentLevel].range);
     }
 
     public void Upgrade()

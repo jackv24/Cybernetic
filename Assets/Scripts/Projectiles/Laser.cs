@@ -15,6 +15,8 @@ public class Laser : MonoBehaviour
 
     public int damage = 10;
 
+    public GameObject hitPrefab;
+
     void Update()
     {
         //Increase the time it has been "alive"
@@ -27,7 +29,7 @@ public class Laser : MonoBehaviour
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
         else
-            Destroy(gameObject);
+            Hit();
     }
 
     void OnCollisionEnter(Collision col)
@@ -40,5 +42,18 @@ public class Laser : MonoBehaviour
 
             life = lifeTime;
         }
+        else if (col.gameObject.tag == "Path")
+        {
+            life = lifeTime;
+        }
+    }
+
+    void Hit()
+    {
+        GameObject obj = Instantiate(hitPrefab, transform.position, Quaternion.identity) as GameObject;
+
+        Destroy(obj, 3f);
+
+        Destroy(gameObject);
     }
 }

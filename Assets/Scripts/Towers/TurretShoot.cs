@@ -9,7 +9,7 @@ public class TurretShoot : MonoBehaviour
     public GameObject projectile;
 
     //The transform at which the projectile will be instantiated
-    public Transform muzzle;
+    public Transform[] muzzles;
 
     //Delay between shots
     private float fireTime = 2.0f;
@@ -50,9 +50,12 @@ public class TurretShoot : MonoBehaviour
     //Fires a projectile
     void Fire()
     {
-        //Instantiates a projectile
-        GameObject proj = Instantiate(projectile, muzzle.position, muzzle.rotation) as GameObject;
-        //Set's the projectiles name
-        proj.name = projectile.name;
+        foreach (Transform muzzle in muzzles)
+        {
+            //Instantiates a projectile
+            GameObject proj = Instantiate(projectile, muzzle.position, muzzle.rotation) as GameObject;
+            //Set's the projectiles name
+            proj.name = projectile.name;
+        }
     }
 }
