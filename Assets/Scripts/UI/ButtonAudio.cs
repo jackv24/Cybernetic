@@ -11,6 +11,7 @@ public class ButtonAudio : MonoBehaviour, IPointerEnterHandler, IPointerClickHan
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        SoundManager.instance.PlaySound("click");
+        if(eventData.button == PointerEventData.InputButton.Left)
+            SoundManager.instance.PlaySound("click");
     }
 }

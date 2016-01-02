@@ -14,6 +14,8 @@ public class TurretLook : MonoBehaviour
     //The spped at which the turret will rotate
     public float rotateSpeed = 0.25f;
 
+    public float offsetAngle = 0f;
+
     private TowerTargets towerTargets;
 
     void Start()
@@ -56,7 +58,7 @@ public class TurretLook : MonoBehaviour
             pivotTransform.rotation = Quaternion.Lerp(pivotTransform.rotation, Quaternion.LookRotation(direction), rotateSpeed);
 
             //Constrain to x axis, following rotate y axis
-            pivotTransform.eulerAngles = new Vector3(pivotTransform.eulerAngles.x, rotateTransform.eulerAngles.y, 0);
+            pivotTransform.eulerAngles = new Vector3(pivotTransform.eulerAngles.x + offsetAngle, rotateTransform.eulerAngles.y, 0);
         }
     }
 }
