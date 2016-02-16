@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class SaveTextFieldValue : MonoBehaviour
 {
     public string valueName;
+    public string defaultValue;
 
     private InputField field;
 
@@ -12,7 +13,7 @@ public class SaveTextFieldValue : MonoBehaviour
     {
         field = GetComponent<InputField>();
 
-        field.text = PlayerPrefs.GetString(valueName, field.text);
+        field.text = PlayerPrefs.GetString(valueName, defaultValue);
 
         //When the value of this text field changes...
         field.onValueChanged.AddListener(delegate { ValueChangedUpdate(); });
